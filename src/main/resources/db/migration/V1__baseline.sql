@@ -3,6 +3,7 @@ alter table if exists user_role
 
 drop table if exists usr cascade;
 drop table if exists user_role cascade;
+drop sequence if exists usr_sequence;
 
 create sequence usr_sequence start with 1 increment by 1;
 

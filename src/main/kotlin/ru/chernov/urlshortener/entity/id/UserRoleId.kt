@@ -1,11 +1,10 @@
 package ru.chernov.urlshortener.entity.id
 
-import ru.chernov.urlshortener.annotation.Lombok
-import ru.chernov.urlshortener.entity.User
+import ru.chernov.urlshortener.entity.user.User
 import java.io.Serializable
 
-@Lombok
-class UserRoleId : Serializable {
-    private var userId: User? = null
-    private var role: String? = null
-}
+
+data class UserRoleId(
+        var user: User,
+        var role: String
+) : Serializable
