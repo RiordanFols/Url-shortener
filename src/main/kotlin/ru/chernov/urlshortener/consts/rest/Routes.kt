@@ -1,6 +1,11 @@
 package ru.chernov.urlshortener.consts.rest
 
-private const val PATH_API: String = "/api"
+const val PATH: String = "/"
+const val PATH_API: String = PATH + "api"
+
+// LINKS
+const val PATH_SHORT_LINK: String = "$PATH/{$SHORT_LINK}"
+const val PATH_API_LINKS: String = "$PATH_API/links"
 
 // USERS
 const val PATH_API_USERS: String = "$PATH_API/users"

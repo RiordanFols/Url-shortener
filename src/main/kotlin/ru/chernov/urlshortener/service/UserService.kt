@@ -1,4 +1,4 @@
-package ru.chernov.urlshortener.service.user
+package ru.chernov.urlshortener.service
 
 import org.apache.logging.log4j.LogManager
 import org.apache.logging.log4j.Logger
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 import ru.chernov.urlshortener.dto.user.UserRegisterRequest
 import ru.chernov.urlshortener.entity.user.User
 import ru.chernov.urlshortener.exception.user.UserNotFoundException
-import ru.chernov.urlshortener.repository.user.UserRepository
+import ru.chernov.urlshortener.repository.UserRepository
 import java.util.*
 
 

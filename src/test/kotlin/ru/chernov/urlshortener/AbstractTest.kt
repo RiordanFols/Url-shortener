@@ -6,7 +6,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import ru.chernov.urlshortener.controller.UserController
-import ru.chernov.urlshortener.repository.user.UserRepository
+import ru.chernov.urlshortener.repository.UserRepository
 
 @ExtendWith(SpringExtension::class)
 @SpringBootTest

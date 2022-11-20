@@ -1,4 +1,4 @@
-package ru.chernov.urlshortener.converter.auto
+package ru.chernov.urlshortener.converter
 
 import jakarta.persistence.AttributeConverter
 import jakarta.persistence.Converter

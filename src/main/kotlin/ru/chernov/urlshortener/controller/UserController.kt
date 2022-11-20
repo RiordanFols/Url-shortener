@@ -11,7 +11,7 @@ import ru.chernov.urlshortener.consts.rest.USER_ID
 import ru.chernov.urlshortener.dto.user.UserRegisterRequest
 import ru.chernov.urlshortener.dto.user.UserResponse
 import ru.chernov.urlshortener.mapper.UserMapper
-import ru.chernov.urlshortener.service.user.UserService
+import ru.chernov.urlshortener.service.UserService
 
 @RestController
 class UserController(
@@ -25,10 +25,16 @@ class UserController(
         return userMapper.toResponse(user)
     }
 
-    // TODO: preauthorize Role GUEST
+    // TODO(preauthorize Role GUEST)
     @PostMapping(PATH_API_USERS)
     fun register(@Valid registerRequest: UserRegisterRequest) {
         userService.register(registerRequest)
     }
+
+    //TODO(change password endpoint)
+
+    // TODO(freeze user endpoint)
+
+    // TODO(recover user endpoint)
 
 }

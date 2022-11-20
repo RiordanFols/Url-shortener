@@ -1,4 +1,4 @@
-package ru.chernov.urlshortener.repository.user
+package ru.chernov.urlshortener.repository
 
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
