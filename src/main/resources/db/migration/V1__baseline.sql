@@ -9,11 +9,11 @@ create sequence usr_sequence start with 1 increment by 1;
 
 create table usr
 (
-    id       bigint       not null DEFAULT nextval('usr_sequence'::regclass),
-    username varchar(30)  not null,
-    password varchar(100) not null,
-    active   boolean      not null,
-    token    varchar(36)  not null,
+    id       bigint             not null DEFAULT nextval('usr_sequence'::regclass),
+    username varchar(30) unique not null,
+    password varchar(100)       not null,
+    active   boolean            not null,
+    token    varchar(36) unique not null,
     primary key (id)
 );
 

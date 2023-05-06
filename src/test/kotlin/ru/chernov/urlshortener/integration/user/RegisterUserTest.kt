@@ -1,6 +1,5 @@
 package ru.chernov.urlshortener.integration.user
 
-import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -38,15 +37,6 @@ class RegisterUserTest : AbstractTest() {
                 .with(authentication)
                 .content(content(userRegisterRequest)))
                 .andExpect(status().isBadRequest)
-
-    }
-
-
-    @AfterEach
-    fun afterEach() {
-        if (userRepository.existsByUsername(NEW_TEST_USERNAME)) {
-            userRepository.deleteByUsername(NEW_TEST_USERNAME)
-        }
     }
 
 }
