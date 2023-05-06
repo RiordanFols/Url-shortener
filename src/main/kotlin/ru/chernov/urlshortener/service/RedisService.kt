@@ -11,7 +11,10 @@ private const val VALUE = "value"
 
 
 @Service
-class RedisService(val redissonClient: RedissonClient, val redisProperties: RedisProperties) {
+class RedisService(
+        private val redissonClient: RedissonClient,
+        private val redisProperties: RedisProperties
+) {
 
     fun <V> getMapCache(key: String, codec: Codec): RMapCache<String, V> {
         val redisKey: String = composeKey(key)
@@ -29,7 +32,7 @@ class RedisService(val redissonClient: RedissonClient, val redisProperties: Redi
         mapCache.fastPut(VALUE, value)
         mapCache.expire(duration)
     }
-    
+
 
     private fun composeKey(key: String): String {
         return redisProperties.keyPrefix + key
