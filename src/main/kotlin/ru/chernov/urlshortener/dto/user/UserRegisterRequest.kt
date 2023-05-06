@@ -4,11 +4,10 @@ import jakarta.validation.constraints.NotNull
 import ru.chernov.urlshortener.validation.constraint.AvailableUsername
 
 
-data class UserRegisterRequest(
+class UserRegisterRequest(
         @AvailableUsername
         @NotNull
-        var username: String,
-
+        var username: String?,
         @NotNull
-        var password: String
+        var password: String?
 )

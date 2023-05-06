@@ -1,10 +1,7 @@
 package ru.chernov.urlshortener.controller
 
 import jakarta.validation.Valid
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import ru.chernov.urlshortener.consts.rest.PATH_API_USERS
 import ru.chernov.urlshortener.consts.rest.PATH_API_USERS_ID
 import ru.chernov.urlshortener.consts.rest.USER_ID
@@ -27,7 +24,7 @@ class UserController(
 
     // TODO(preauthorize Role GUEST)
     @PostMapping(PATH_API_USERS)
-    fun register(@Valid registerRequest: UserRegisterRequest) {
+    fun register(@Valid @RequestBody registerRequest: UserRegisterRequest) {
         userService.register(registerRequest)
     }
 

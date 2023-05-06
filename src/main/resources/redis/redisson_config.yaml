@@ -1,5 +1,5 @@
 singleServerConfig:
-  clientName: redisson_optima_2_backend
+  clientName: redisson_url_shortener
   connectionMinimumIdleSize: 2
   connectionPoolSize: 50
   subscriptionConnectionMinimumIdleSize: 2
