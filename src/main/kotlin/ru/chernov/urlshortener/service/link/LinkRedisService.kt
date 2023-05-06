@@ -10,7 +10,10 @@ import java.time.Duration
 
 
 @Service
-class LinkRedisService(val redisService: RedisService, val objectMapper: ObjectMapper) {
+class LinkRedisService(
+        private val redisService: RedisService,
+        private val objectMapper: ObjectMapper
+) {
 
     private lateinit var codec: Codec
 

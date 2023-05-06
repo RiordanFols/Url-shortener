@@ -14,9 +14,9 @@ fun nextAlphanumeric(length: Int): String {
     val random: Random = ThreadLocalRandom.current()
     val charArray = CharArray(length)
 
-    for (i in 0..length) {
+    for (i in 0 until length) {
         val randomIndex: Int = random.nextInt(ALPHANUMERIC.length - 1)
         charArray[i] = ALPHANUMERIC[randomIndex]
     }
-    return charArray.toString()
+    return String(charArray)
 }

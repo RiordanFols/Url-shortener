@@ -7,11 +7,15 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
 import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.UserRequestPostProcessor
 import org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers
 import org.springframework.test.context.junit.jupiter.SpringExtension
+import org.springframework.test.web.servlet.MvcResult
 import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import org.springframework.transaction.annotation.Transactional
+import kotlin.reflect.KClass
 
 
 @ExtendWith(SpringExtension::class)
@@ -19,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional
 @AutoConfigureMockMvc
 @Transactional
 abstract class AbstractTest : TestDependencies() {
+    protected val authentication: UserRequestPostProcessor = SecurityMockMvcRequestPostProcessors.user("test").password("password")
 
     @BeforeEach
     fun setUp() {
@@ -38,6 +43,10 @@ abstract class AbstractTest : TestDependencies() {
         return objectMapper.writeValueAsBytes(any)
     }
 
+
+    fun <T : Any> readContent(mvcResult: MvcResult, kClass: KClass<T>): T {
+        return objectMapper.readValue(mvcResult.response.contentAsString, kClass.javaObjectType)
+    }
 }
 
 

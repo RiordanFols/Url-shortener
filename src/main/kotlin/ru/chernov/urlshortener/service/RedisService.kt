@@ -20,8 +20,7 @@ class RedisService(val redissonClient: RedissonClient, val redisProperties: Redi
 
 
     fun <V> getValue(key: String, codec: Codec): V? {
-        val redisKey: String = composeKey(key)
-        return getMapCache<V>(redisKey, codec)[VALUE]
+        return getMapCache<V>(key, codec)[VALUE]
     }
 
 

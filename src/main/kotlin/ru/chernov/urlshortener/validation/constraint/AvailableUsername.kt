@@ -10,7 +10,6 @@ import kotlin.reflect.KClass
 @Retention(AnnotationRetention.RUNTIME)
 @Constraint(validatedBy = [AvailableUsernameValidator::class])
 annotation class AvailableUsername(
-        // TODO: error message
         val message: String = "Username already exists",
         val groups: Array<KClass<*>> = [],
         val payload: Array<KClass<out Payload>> = []

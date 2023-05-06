@@ -9,14 +9,19 @@ import ru.chernov.urlshortener.utils.nextAlphanumeric
 
 
 @Service
-class LinkService(val linkRedisService: LinkRedisService, val linkProperties: LinkProperties) {
+class LinkService(
+        private val linkRedisService: LinkRedisService,
+        private val linkProperties: LinkProperties
+) {
     private val logger: Logger = LogManager.getLogger(LinkService::class)
 
+    
     fun shorten(link: String): String {
         val shortLink: String = getShortLink()
         linkRedisService.write(shortLink, link)
         return shortLink
     }
+
 
     fun restore(shortLink: String): String {
         return linkRedisService.read(shortLink) ?: run {
