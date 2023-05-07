@@ -1,10 +1,10 @@
 package ru.chernov.urlshortener.dto.link
 
 import jakarta.validation.constraints.NotBlank
-import org.hibernate.validator.constraints.Length
+import jakarta.validation.constraints.Size
 
 data class LinkShortenRequest(
         @NotBlank
-        @Length(max = 1000)
+        @field:Size(max = 1000, message = "Link is too big")
         val link: String
 )

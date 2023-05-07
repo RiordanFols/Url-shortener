@@ -13,8 +13,9 @@ private const val NEW_TEST_USERNAME = "new_username"
 
 class RegisterUserTest : AbstractTest() {
 
+    // TODO: на SQL скрипт
     @Test
-    fun shouldRegisterUser() {
+    fun registerUser() {
         val userRegisterRequest = UserRegisterRequest(NEW_TEST_USERNAME, "12345")
         mockMvc.perform(postJson(PATH_API_USERS)
                 .with(authentication)
@@ -25,8 +26,9 @@ class RegisterUserTest : AbstractTest() {
     }
 
 
+    // TODO: на SQL скрипт
     @Test
-    fun shouldThrowCauseUsernameExist() {
+    fun usernameExist() {
         val userRegisterRequest = UserRegisterRequest(NEW_TEST_USERNAME, "12345")
         mockMvc.perform(postJson(PATH_API_USERS)
                 .with(authentication)
