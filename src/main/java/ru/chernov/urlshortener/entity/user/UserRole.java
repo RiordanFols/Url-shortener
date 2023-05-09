@@ -1,5 +1,6 @@
 package ru.chernov.urlshortener.entity.user;
 
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
@@ -11,7 +12,9 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
+import ru.chernov.urlshortener.converter.UserRoleNameConverter;
 import ru.chernov.urlshortener.entity.id.UserRoleId;
+import ru.chernov.urlshortener.enums.UserRoleName;
 
 
 @Data
@@ -28,12 +31,13 @@ public class UserRole implements GrantedAuthority {
     @Id
     @NotNull
     @Length(max = 50)
-    private String role;
+    @Convert(converter = UserRoleNameConverter.class)
+    private UserRoleName role;
 
 
     @Override
     public String getAuthority() {
-        return role;
+        return role.getDbValue();
     }
 
 }
