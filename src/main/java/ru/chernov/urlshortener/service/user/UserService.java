@@ -1,6 +1,5 @@
 package ru.chernov.urlshortener.service.user;
 
-import lombok.val;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -45,7 +44,7 @@ public class UserService implements UserDetailsService {
 
     public void register(UserRegisterRequest registerRequest) {
         // TODO: шифрование паролей
-        val user = new User();
+        var user = new User();
         user.setUsername(registerRequest.getUsername());
         user.setPassword(registerRequest.getPassword());
         user.setToken(UUID.randomUUID());
