@@ -28,4 +28,19 @@ public class UserGetTest extends AbstractTest {
                 .andExpect(jsonPath("$.token").isNotEmpty());
     }
 
+
+    @Sql(value = "/sql/user/get-inactive-before.sql", executionPhase = BEFORE_TEST_METHOD)
+    @Sql(value = "/sql/user/get-inactive-after.sql", executionPhase = AFTER_TEST_METHOD)
+    @Test
+    void getInactive() throws Exception {
+        long id = 9_000_000_101L;
+        mockMvc.perform(getJson(PATH_API_USERS_ID, id)
+                        .with(authentication))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$.id").value(id))
+                .andExpect(jsonPath("$.username").isNotEmpty())
+                .andExpect(jsonPath("$.token").isNotEmpty());
+    }
+
 }
