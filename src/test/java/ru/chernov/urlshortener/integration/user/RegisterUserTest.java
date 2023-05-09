@@ -1,9 +1,9 @@
 package ru.chernov.urlshortener.integration.user;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import ru.chernov.urlshortener.AbstractTest;
 import ru.chernov.urlshortener.dto.user.UserRegisterRequest;
-import ru.chernov.urlshortener.exception.user.UsernameExistsException;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -41,7 +41,7 @@ public class RegisterUserTest extends AbstractTest {
                         .with(authentication)
                         .content(content(request)))
                 .andExpect(status().isBadRequest())
-                .andExpect(res -> assertTrue(res.getResolvedException() instanceof UsernameExistsException));
+                .andExpect(res -> assertTrue(res.getResolvedException() instanceof MethodArgumentNotValidException));
     }
 
 }
