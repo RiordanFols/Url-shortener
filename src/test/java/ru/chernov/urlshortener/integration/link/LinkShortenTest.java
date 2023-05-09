@@ -13,7 +13,7 @@ import static ru.chernov.urlshortener.helper.HttpHelper.postJson;
 import static ru.chernov.urlshortener.utils.StringRandomizer.nextAlphanumeric;
 
 
-public class ShortenLinkTest extends AbstractTest {
+public class LinkShortenTest extends AbstractTest {
 
     @Test
     void shortenLink() throws Exception {

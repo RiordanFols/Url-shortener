@@ -11,7 +11,7 @@ import static ru.chernov.urlshortener.consts.rest.Routes.PATH_API_USERS;
 import static ru.chernov.urlshortener.helper.HttpHelper.postJson;
 
 
-public class RegisterUserTest extends AbstractTest {
+public class UserRegisterTest extends AbstractTest {
     private static final String TEST_USERNAME = "new_username";
 
 

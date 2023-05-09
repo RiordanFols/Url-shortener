@@ -6,6 +6,6 @@ public class Routes {
     public static final String PATH_API_LINKS = "/api/links";
 
     public static final String PATH_API_USERS = "/api/users";
-    public static final String PATH_API_USERS_ID = "/api/users/{$USER_ID}";
+    public static final String PATH_API_USERS_ID = "/api/users/{USER_ID}";
 
 }
