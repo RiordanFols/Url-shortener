@@ -21,7 +21,7 @@ public class UserRegisterTest extends AbstractTest {
     void registerUser() throws Exception {
         UserRegisterRequest request = new UserRegisterRequest(TEST_USERNAME, "12345");
         mockMvc.perform(postJson(PATH_API_USERS)
-                        .with(authentication)
+                        .with(AUTHENTICATION)
                         .content(content(request)))
                 .andExpect(status().isOk());
 
@@ -35,7 +35,7 @@ public class UserRegisterTest extends AbstractTest {
     void usernameExist() throws Exception {
         UserRegisterRequest request = new UserRegisterRequest(TEST_USERNAME, "12345");
         mockMvc.perform(postJson(PATH_API_USERS)
-                        .with(authentication)
+                        .with(AUTHENTICATION)
                         .content(content(request)))
                 .andExpect(status().isBadRequest())
                 .andExpect(res -> assertTrue(res.getResolvedException() instanceof MethodArgumentNotValidException));

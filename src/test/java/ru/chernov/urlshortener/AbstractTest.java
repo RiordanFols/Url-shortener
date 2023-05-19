@@ -19,8 +19,7 @@ import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TE
 @ExtendWith(SpringExtension.class)
 @Sql(value = "/sql/clear.sql", executionPhase = BEFORE_TEST_METHOD)
 public class AbstractTest extends TestDependencies {
-    // TODO:
-    protected UserRequestPostProcessor authentication = SecurityMockMvcRequestPostProcessors.user("test").password("password");
+    protected static final UserRequestPostProcessor AUTHENTICATION = SecurityMockMvcRequestPostProcessors.user("test").password("password");
 
 
     @BeforeEach

@@ -19,7 +19,7 @@ public class LinkShortenTest extends AbstractTest {
     void shortenLink() throws Exception {
         LinkShortenRequest request = new LinkShortenRequest("https://google.com");
         String shortLink = mockMvc.perform(postJson(PATH_API_LINKS)
-                        .with(authentication)
+                        .with(AUTHENTICATION)
                         .content(content(request)))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -34,7 +34,7 @@ public class LinkShortenTest extends AbstractTest {
     void tooLongLink() throws Exception {
         LinkShortenRequest request = new LinkShortenRequest(nextAlphanumeric(1002));
         mockMvc.perform(postJson(PATH_API_LINKS)
-                        .with(authentication)
+                        .with(AUTHENTICATION)
                         .content(content(request)))
                 .andExpect(status().isBadRequest())
                 .andExpect(res -> assertTrue(res.getResolvedException() instanceof MethodArgumentNotValidException));

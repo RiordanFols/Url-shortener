@@ -21,7 +21,7 @@ public class UserGetTest extends AbstractTest {
     void get() throws Exception {
         long id = 9_000_000_100L;
         mockMvc.perform(getJson(PATH_API_USERS_ID, id)
-                        .with(authentication))
+                        .with(AUTHENTICATION))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNotEmpty())
                 .andExpect(jsonPath("$.id").value(id))
@@ -36,7 +36,7 @@ public class UserGetTest extends AbstractTest {
     void getInactive() throws Exception {
         long id = 9_000_000_101L;
         mockMvc.perform(getJson(PATH_API_USERS_ID, id)
-                        .with(authentication))
+                        .with(AUTHENTICATION))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNotEmpty())
                 .andExpect(jsonPath("$.id").value(id))
@@ -48,7 +48,7 @@ public class UserGetTest extends AbstractTest {
     @Test
     void notFound() throws Exception {
         mockMvc.perform(getJson(PATH_API_USERS_ID, 9_999_999_999L)
-                        .with(authentication))
+                        .with(AUTHENTICATION))
                 .andExpect(status().isNotFound())
                 .andExpect(res -> assertTrue(res.getResolvedException() instanceof UserNotFoundException));
     }
