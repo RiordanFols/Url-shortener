@@ -35,8 +35,7 @@ public class UserController {
         return userMapper.toResponse(user);
     }
 
-
-    // TODO(preauthorize Role GUEST)
+    
     @PostMapping(PATH_API_USERS)
     public void register(@Valid @RequestBody UserRegisterRequest request) {
         userService.register(request);
