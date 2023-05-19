@@ -3,6 +3,7 @@ package ru.chernov.urlshortener.service.user;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.chernov.urlshortener.dto.user.UserRegisterRequest;
 import ru.chernov.urlshortener.entity.user.User;
@@ -17,10 +18,13 @@ import java.util.UUID;
 public class UserService implements UserDetailsService {
     private static final Logger logger = LogManager.getLogger(UserService.class);
 
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
 
-    public UserService(UserRepository userRepository) {
+    public UserService(PasswordEncoder passwordEncoder,
+                       UserRepository userRepository) {
+        this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
     }
 
@@ -43,10 +47,9 @@ public class UserService implements UserDetailsService {
 
 
     public void register(UserRegisterRequest registerRequest) {
-        // TODO: шифрование паролей
         var user = new User();
         user.setUsername(registerRequest.getUsername());
-        user.setPassword(registerRequest.getPassword());
+        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setToken(UUID.randomUUID());
         user.setActive(true);
         userRepository.save(user);
