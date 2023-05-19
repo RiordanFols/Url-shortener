@@ -15,7 +15,8 @@ import static ru.chernov.urlshortener.helper.HttpHelper.getJson;
 
 public class UserGetTest extends AbstractTest {
 
-    @Sql(value = "/sql/user/get-before.sql", executionPhase = BEFORE_TEST_METHOD)
+    @Sql(value = {"/sql/clear.sql", "/sql/user/get/get-before.sql"},
+            executionPhase = BEFORE_TEST_METHOD)
     @Test
     void get() throws Exception {
         long id = 9_000_000_100L;
@@ -29,7 +30,8 @@ public class UserGetTest extends AbstractTest {
     }
 
 
-    @Sql(value = "/sql/user/get-inactive-before.sql", executionPhase = BEFORE_TEST_METHOD)
+    @Sql(value = {"/sql/clear.sql", "/sql/user/get/get-inactive-before.sql"},
+            executionPhase = BEFORE_TEST_METHOD)
     @Test
     void getInactive() throws Exception {
         long id = 9_000_000_101L;
