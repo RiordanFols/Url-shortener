@@ -1,28 +1,21 @@
-alter table if exists user_role
-    drop constraint if exists FKfpm8swft53ulq2hl11yplpr5;
+CREATE SEQUENCE usr_sequence START WITH 1 INCREMENT BY 1;
 
-drop table if exists usr cascade;
-drop table if exists user_role cascade;
-drop sequence if exists usr_sequence;
-
-create sequence usr_sequence start with 1 increment by 1;
-
-create table usr
+CREATE TABLE usr
 (
-    id       bigint             not null DEFAULT nextval('usr_sequence'::regclass),
-    username varchar(30) unique not null,
-    password varchar(100)       not null,
-    active   boolean            not null,
-    token    varchar(36) unique not null,
-    primary key (id)
+    id       BIGINT             NOT NULL DEFAULT nextval('usr_sequence'::regclass),
+    username VARCHAR(30) UNIQUE NOT NULL,
+    password VARCHAR(100)       NOT NULL,
+    active   BOOLEAN            NOT NULL,
+    token    VARCHAR(36) UNIQUE NOT NULL,
+    PRIMARY KEY (id)
 );
 
-create table user_role
+CREATE TABLE user_role
 (
-    user_id bigint      not null,
-    role    varchar(50) not null,
-    primary key (user_id, role)
+    user_id BIGINT      NOT NULL,
+    role    VARCHAR(50) NOT NULL,
+    PRIMARY KEY (user_id, role)
 );
 
-alter table if exists user_role
-    add constraint fk_user_role_usr foreign key (user_id) references usr;
+ALTER TABLE IF EXISTS user_role
+    ADD CONSTRAINT fk_user_role_usr FOREIGN KEY (user_id) REFERENCES usr;
