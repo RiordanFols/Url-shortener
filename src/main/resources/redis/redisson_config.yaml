@@ -1,0 +1,13 @@
+singleServerConfig:
+  clientName: redisson_url_shortener
+  connectionMinimumIdleSize: 2
+  connectionPoolSize: 50
+  subscriptionConnectionMinimumIdleSize: 2
+  subscriptionConnectionPoolSize: 50
+  subscriptionsPerConnection: 40
+  retryAttempts: 5
+  retryInterval: 10000
+  connectTimeout: 10000
+  timeout: 5000
+threads: 2
+nettyThreads: 4
