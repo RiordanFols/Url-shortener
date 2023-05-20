@@ -1,13 +1,13 @@
 package ru.chernov.urlshortener.exception.setting;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
+import ru.chernov.urlshortener.exception.LocalizableResponseStatusException;
 
 
-public class SettingNotFoundException extends ResponseStatusException {
+public class SettingNotFoundException extends LocalizableResponseStatusException {
 
     public SettingNotFoundException() {
-        super(HttpStatus.NOT_FOUND);
+        super(HttpStatus.NOT_FOUND, "setting.not-found");
     }
 
 }

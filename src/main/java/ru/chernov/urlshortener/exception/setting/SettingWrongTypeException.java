@@ -1,13 +1,13 @@
 package ru.chernov.urlshortener.exception.setting;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
+import ru.chernov.urlshortener.exception.LocalizableResponseStatusException;
 
 
-public class SettingWrongTypeException extends ResponseStatusException {
+public class SettingWrongTypeException extends LocalizableResponseStatusException {
 
     public SettingWrongTypeException() {
-        super(HttpStatus.CONFLICT);
+        super(HttpStatus.CONFLICT, "setting.wrong-type");
     }
 
 }
