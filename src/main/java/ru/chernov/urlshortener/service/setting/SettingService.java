@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.chernov.urlshortener.dto.setting.SettingKey;
 import ru.chernov.urlshortener.entity.Setting;
 import ru.chernov.urlshortener.exception.setting.SettingNotFoundException;
+import ru.chernov.urlshortener.exception.setting.SettingWrongTypeException;
 import ru.chernov.urlshortener.repository.setting.SettingRepository;
 
 
@@ -31,6 +32,10 @@ public class SettingService {
 
     public <T> T get(SettingKey<T> settingKey) {
         Setting setting = findById(settingKey.name());
+        if (setting.getType() != settingKey.settingType()) {
+            logger.error("Wrong setting type for [{}].", settingKey.name());
+            throw new SettingWrongTypeException();
+        }
         return settingKey.parser().apply(setting);
     }
 
