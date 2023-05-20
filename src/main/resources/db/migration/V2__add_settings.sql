@@ -7,4 +7,4 @@ CREATE TABLE setting
 );
 
 INSERT INTO setting(name, type, value)
-VALUES (1, 'DURATION', '1D');
+VALUES ('linkTtl', 'DURATION', 'PT24h');
