@@ -20,8 +20,7 @@ public class LocalizationService {
         this.messageSource = messageSource;
     }
 
-
-    // TODO: вызывать в ExceptionHandler
+    
     public String localize(String code) {
         // TODO: cache in redis
         Locale locale = new Locale(settingService.get(SettingKey.LANG));

@@ -1,4 +1,4 @@
-package ru.chernov.urlshortener.config;
+package ru.chernov.urlshortener.config.infrastructure;
 
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
