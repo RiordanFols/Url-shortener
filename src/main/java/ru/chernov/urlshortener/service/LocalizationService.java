@@ -20,9 +20,8 @@ public class LocalizationService {
         this.messageSource = messageSource;
     }
 
-    
+
     public String localize(String code) {
-        // TODO: cache in redis
         Locale locale = new Locale(settingService.get(SettingKey.LANG));
         return messageSource.getMessage(code, new Object[]{}, locale);
     }
