@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.redisson.client.codec.Codec;
 import org.redisson.codec.TypedJsonJacksonCodec;
 import org.springframework.stereotype.Service;
+import ru.chernov.urlshortener.config.properties.RedisProperties;
 import ru.chernov.urlshortener.dto.setting.SettingKey;
 import ru.chernov.urlshortener.service.infrastructure.RedisService;
 
@@ -13,11 +14,15 @@ import java.util.Optional;
 
 @Service
 public class SettingRedisService {
+    private final RedisProperties redisProperties;
     private final RedisService redisService;
     private final Codec codec;
 
 
-    public SettingRedisService(RedisService redisService, ObjectMapper objectMapper) {
+    public SettingRedisService(RedisProperties redisProperties,
+                               RedisService redisService,
+                               ObjectMapper objectMapper) {
+        this.redisProperties = redisProperties;
         this.redisService = redisService;
         this.codec = new TypedJsonJacksonCodec(String.class, String.class, objectMapper);
     }
@@ -29,8 +34,8 @@ public class SettingRedisService {
 
 
     public void write(SettingKey<?> settingKey, String value) {
-        // TODO: duration from config
-        redisService.putValue(getKey(settingKey), codec, value, Duration.ofDays(1));
+        Duration ttl = redisProperties.getSettingsCacheTtl();
+        redisService.putValue(getKey(settingKey), codec, value, ttl);
     }
 
 
