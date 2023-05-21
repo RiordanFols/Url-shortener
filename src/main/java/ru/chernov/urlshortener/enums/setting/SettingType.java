@@ -4,7 +4,8 @@ import ru.chernov.urlshortener.enums.attribute.AttributeEnum;
 
 
 public enum SettingType implements AttributeEnum<String> {
-    DURATION("DURATION");
+    DURATION("DURATION"),
+    STRING("STRING");
 
     private final String dbValue;
 
