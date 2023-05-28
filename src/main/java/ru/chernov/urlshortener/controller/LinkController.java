@@ -24,8 +24,7 @@ public class LinkController {
         this.linkService = linkService;
     }
 
-
-    // TODO: test it
+    
     @GetMapping(PATH_SHORT_LINK)
     public RedirectView redirect(@PathVariable(SHORT_LINK) String shortLink) {
         return new RedirectView(linkService.restore(shortLink));
