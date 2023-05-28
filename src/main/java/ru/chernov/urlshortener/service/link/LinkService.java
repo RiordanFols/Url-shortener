@@ -31,16 +31,6 @@ public class LinkService {
 
 
     @Transactional
-    public String shorten(String link) {
-        operationService.addOperation(OperationType.SHORTEN);
-
-        String shortLink = getShortLink();
-        linkRedisService.write(shortLink, link);
-        return shortLink;
-    }
-
-
-    @Transactional
     public String restore(String shortLink) {
         operationService.addOperation(OperationType.REDIRECT);
 
@@ -48,6 +38,16 @@ public class LinkService {
             logger.error("Cannot found short link [{}].", shortLink);
             throw new LinkNotFoundException();
         });
+    }
+
+
+    @Transactional
+    public String shorten(String link) {
+        operationService.addOperation(OperationType.SHORTEN);
+
+        String shortLink = getShortLink();
+        linkRedisService.write(shortLink, link);
+        return shortLink;
     }
 
 
