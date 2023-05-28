@@ -10,7 +10,7 @@ import ru.chernov.urlshortener.dto.user.UserRegisterRequest;
 import ru.chernov.urlshortener.dto.user.UserResponse;
 import ru.chernov.urlshortener.entity.user.User;
 import ru.chernov.urlshortener.mapper.UserMapper;
-import ru.chernov.urlshortener.service.user.UserService;
+import ru.chernov.urlshortener.service.UserService;
 
 import static ru.chernov.urlshortener.consts.rest.PathVariables.USER_ID;
 import static ru.chernov.urlshortener.consts.rest.Routes.PATH_API_USERS;

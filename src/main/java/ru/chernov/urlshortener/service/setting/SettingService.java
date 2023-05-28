@@ -7,7 +7,7 @@ import ru.chernov.urlshortener.dto.setting.SettingKey;
 import ru.chernov.urlshortener.entity.Setting;
 import ru.chernov.urlshortener.exception.setting.SettingNotFoundException;
 import ru.chernov.urlshortener.exception.setting.SettingWrongTypeException;
-import ru.chernov.urlshortener.repository.setting.SettingRepository;
+import ru.chernov.urlshortener.repository.SettingRepository;
 
 import java.util.Optional;
 

@@ -9,7 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import ru.chernov.urlshortener.service.user.UserService;
+import ru.chernov.urlshortener.service.UserService;
 
 import static ru.chernov.urlshortener.consts.rest.Routes.PATH_API_USERS;
 

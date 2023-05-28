@@ -1,4 +1,4 @@
-package ru.chernov.urlshortener.enums;
+package ru.chernov.urlshortener.enums.user;
 
 import ru.chernov.urlshortener.enums.attribute.AttributeEnum;
 

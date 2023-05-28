@@ -2,7 +2,7 @@ package ru.chernov.urlshortener.converter;
 
 import jakarta.persistence.Converter;
 import ru.chernov.urlshortener.converter.attribute.AttributeEnumConverter;
-import ru.chernov.urlshortener.enums.UserRoleName;
+import ru.chernov.urlshortener.enums.user.UserRoleName;
 
 
 @Converter

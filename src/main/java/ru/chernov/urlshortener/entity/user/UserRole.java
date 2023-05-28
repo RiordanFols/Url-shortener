@@ -13,8 +13,7 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import ru.chernov.urlshortener.converter.UserRoleNameConverter;
-import ru.chernov.urlshortener.entity.id.UserRoleId;
-import ru.chernov.urlshortener.enums.UserRoleName;
+import ru.chernov.urlshortener.enums.user.UserRoleName;
 
 
 @Data

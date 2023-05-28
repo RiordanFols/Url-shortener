@@ -1,7 +1,6 @@
-package ru.chernov.urlshortener.entity.id;
+package ru.chernov.urlshortener.entity.user;
 
 import lombok.Data;
-import ru.chernov.urlshortener.entity.user.User;
 
 import java.io.Serializable;
 import java.util.Objects;
