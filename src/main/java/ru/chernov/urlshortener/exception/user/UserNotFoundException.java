@@ -1,13 +1,12 @@
 package ru.chernov.urlshortener.exception.user;
 
-import org.springframework.http.HttpStatus;
-import ru.chernov.urlshortener.exception.LocalizableResponseStatusException;
+import ru.chernov.urlshortener.exception.AbstractNotFoundException;
 
 
-public class UserNotFoundException extends LocalizableResponseStatusException {
+public class UserNotFoundException extends AbstractNotFoundException {
 
     public UserNotFoundException() {
-        super(HttpStatus.NOT_FOUND, "user.not-found");
+        super("user");
     }
 
 }

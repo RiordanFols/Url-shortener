@@ -16,7 +16,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Set;
-import java.util.UUID;
 
 
 @Data
@@ -29,6 +28,8 @@ public class User implements UserDetails {
     @SequenceGenerator(name = "usr_sequence", sequenceName = "usr_sequence", allocationSize = 1)
     private Long id;
 
+    // TODO: registered at
+
     @NotNull
     @Length(max = 30)
     private String username;
@@ -37,11 +38,9 @@ public class User implements UserDetails {
     @Length(max = 100)
     private String password;
 
+    // TODO: to status
     @NotNull
     private Boolean active;
-
-    @NotNull
-    private UUID token;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<UserRole> userRoles;

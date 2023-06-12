@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import ru.chernov.urlshortener.service.UserService;
 
+import static ru.chernov.urlshortener.consts.rest.Routes.PATH_API_LINKS;
 import static ru.chernov.urlshortener.consts.rest.Routes.PATH_API_USERS;
 import static ru.chernov.urlshortener.consts.rest.Routes.PATH_SHORT_LINK;
 
@@ -40,6 +41,7 @@ public class WebSecurityConfig {
                                 .requestMatchers("/", "/*").permitAll()
                                 .requestMatchers(HttpMethod.POST, PATH_API_USERS).anonymous()
                                 .requestMatchers(HttpMethod.GET, PATH_SHORT_LINK).anonymous()
+                                .requestMatchers(HttpMethod.POST, PATH_API_LINKS).anonymous()
                                 .anyRequest().authenticated())
                 .csrf().disable();
 

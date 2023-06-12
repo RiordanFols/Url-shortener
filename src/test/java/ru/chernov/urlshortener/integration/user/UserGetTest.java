@@ -25,8 +25,7 @@ public class UserGetTest extends AbstractTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNotEmpty())
                 .andExpect(jsonPath("$.id").value(id))
-                .andExpect(jsonPath("$.username").isNotEmpty())
-                .andExpect(jsonPath("$.token").isNotEmpty());
+                .andExpect(jsonPath("$.username").isNotEmpty());
     }
 
 
@@ -40,8 +39,7 @@ public class UserGetTest extends AbstractTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNotEmpty())
                 .andExpect(jsonPath("$.id").value(id))
-                .andExpect(jsonPath("$.username").isNotEmpty())
-                .andExpect(jsonPath("$.token").isNotEmpty());
+                .andExpect(jsonPath("$.username").isNotEmpty());
     }
 
 

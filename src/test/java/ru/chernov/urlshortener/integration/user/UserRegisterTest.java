@@ -8,7 +8,6 @@ import ru.chernov.urlshortener.dto.user.UserRegisterRequest;
 import ru.chernov.urlshortener.entity.user.User;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,7 +31,6 @@ public class UserRegisterTest extends AbstractTest {
         assertEquals(TEST_USERNAME, user.getUsername());
         assertTrue(passwordEncoder.matches(password, user.getPassword()));
         assertTrue(user.getActive());
-        assertNotNull(user.getToken());
     }
 
 

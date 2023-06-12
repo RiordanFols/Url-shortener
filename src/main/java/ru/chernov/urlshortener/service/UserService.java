@@ -11,8 +11,6 @@ import ru.chernov.urlshortener.exception.link.LinkNotFoundException;
 import ru.chernov.urlshortener.exception.user.UserNotFoundException;
 import ru.chernov.urlshortener.repository.UserRepository;
 
-import java.util.UUID;
-
 
 @Service
 public class UserService implements UserDetailsService {
@@ -45,12 +43,11 @@ public class UserService implements UserDetailsService {
         });
     }
 
-
+    
     public void register(UserRegisterRequest registerRequest) {
         var user = new User();
         user.setUsername(registerRequest.getUsername());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        user.setToken(UUID.randomUUID());
         user.setActive(true);
         userRepository.save(user);
     }

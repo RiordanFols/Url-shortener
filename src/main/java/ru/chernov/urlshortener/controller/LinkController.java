@@ -24,7 +24,7 @@ public class LinkController {
         this.linkService = linkService;
     }
 
-    
+
     @GetMapping(PATH_SHORT_LINK)
     public RedirectView redirect(@PathVariable(SHORT_LINK) String shortLink) {
         return new RedirectView(linkService.restore(shortLink));
@@ -33,7 +33,7 @@ public class LinkController {
 
     @PostMapping(PATH_API_LINKS)
     public String shorten(@Valid @RequestBody LinkShortenRequest request) {
-        return linkService.shorten(request.getLink());
+        return linkService.shorten(request);
     }
 
 }

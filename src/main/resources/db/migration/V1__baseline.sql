@@ -6,7 +6,6 @@ CREATE TABLE usr
     username VARCHAR(30) UNIQUE NOT NULL,
     password VARCHAR(100)       NOT NULL,
     active   BOOLEAN            NOT NULL,
-    token    VARCHAR(36) UNIQUE NOT NULL,
     PRIMARY KEY (id)
 );
 
