@@ -2,6 +2,8 @@ package ru.chernov.urlshortener.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,8 +32,15 @@ public class UserService implements UserDetailsService {
     }
 
 
+    public User getCurrent() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return loadUserByUsername(authentication.getName());
+    }
+
+
     @Override
     public User loadUserByUsername(String username) {
+        logger.info("Check username [{}].", username);
         return userRepository.findByUsername(username).orElseThrow(() -> {
             logger.error("User username=[{}] not found.", username);
             throw new LinkNotFoundException();
