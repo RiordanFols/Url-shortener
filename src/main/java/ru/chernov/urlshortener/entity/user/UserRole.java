@@ -12,7 +12,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
-import ru.chernov.urlshortener.converter.UserRoleNameConverter;
+import ru.chernov.urlshortener.converter.user.UserRoleNameConverter;
 import ru.chernov.urlshortener.enums.user.UserRoleName;
 
 

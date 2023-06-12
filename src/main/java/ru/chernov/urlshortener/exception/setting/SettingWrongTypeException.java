@@ -7,7 +7,7 @@ import ru.chernov.urlshortener.exception.LocalizableResponseStatusException;
 public class SettingWrongTypeException extends LocalizableResponseStatusException {
 
     public SettingWrongTypeException() {
-        super(HttpStatus.CONFLICT, "setting.wrong-type");
+        super(HttpStatus.CONFLICT, "setting", "wrong-type");
     }
 
 }

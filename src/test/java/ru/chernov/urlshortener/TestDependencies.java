@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import ru.chernov.urlshortener.repository.OperationRepository;
+import ru.chernov.urlshortener.repository.TokenRepository;
 import ru.chernov.urlshortener.repository.UserRepository;
 import ru.chernov.urlshortener.service.UserService;
 import ru.chernov.urlshortener.service.link.LinkRedisService;
@@ -33,5 +34,7 @@ public class TestDependencies {
     protected PasswordEncoder passwordEncoder;
     @Autowired
     protected OperationRepository operationRepository;
+    @Autowired
+    protected TokenRepository tokenRepository;
 
 }

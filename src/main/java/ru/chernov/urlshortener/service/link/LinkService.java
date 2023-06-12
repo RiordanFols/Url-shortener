@@ -5,9 +5,14 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.chernov.urlshortener.config.properties.LinkProperties;
+import ru.chernov.urlshortener.dto.link.LinkShortenRequest;
+import ru.chernov.urlshortener.dto.link.RedisLinkDto;
 import ru.chernov.urlshortener.enums.operation.OperationType;
 import ru.chernov.urlshortener.exception.link.LinkNotFoundException;
 import ru.chernov.urlshortener.service.OperationService;
+import ru.chernov.urlshortener.service.TokenService;
+
+import java.util.UUID;
 
 import static ru.chernov.urlshortener.utils.StringRandomizer.nextAlphanumeric;
 
@@ -16,14 +21,17 @@ import static ru.chernov.urlshortener.utils.StringRandomizer.nextAlphanumeric;
 public class LinkService {
     private static final Logger logger = LogManager.getLogger(LinkService.class);
 
+    private final TokenService tokenService;
     private final OperationService operationService;
     private final LinkRedisService linkRedisService;
     private final LinkProperties linkProperties;
 
 
-    public LinkService(OperationService operationService,
+    public LinkService(TokenService tokenService,
+                       OperationService operationService,
                        LinkRedisService linkRedisService,
                        LinkProperties linkProperties) {
+        this.tokenService = tokenService;
         this.operationService = operationService;
         this.linkRedisService = linkRedisService;
         this.linkProperties = linkProperties;
@@ -32,21 +40,25 @@ public class LinkService {
 
     @Transactional
     public String restore(String shortLink) {
-        operationService.addOperation(OperationType.REDIRECT);
-
-        return linkRedisService.read(linkProperties.getPrefix() + shortLink).orElseThrow(() -> {
+        RedisLinkDto redisLink = linkRedisService.read(linkProperties.getPrefix() + shortLink).orElseThrow(() -> {
             logger.error("Cannot found short link [{}].", shortLink);
             throw new LinkNotFoundException();
         });
+
+        operationService.addOperation(OperationType.REDIRECT, redisLink.getToken());
+        return redisLink.getLink();
     }
 
 
     @Transactional
-    public String shorten(String link) {
-        operationService.addOperation(OperationType.SHORTEN);
+    public String shorten(LinkShortenRequest request) {
+        UUID token = request.getToken();
+        tokenService.validate(token);
+
+        operationService.addOperation(OperationType.SHORTEN, token);
 
         String shortLink = getShortLink();
-        linkRedisService.write(shortLink, link);
+        linkRedisService.write(shortLink, request.getLink(), token);
         return shortLink;
     }
 

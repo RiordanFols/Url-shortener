@@ -1,5 +1,6 @@
 package ru.chernov.urlshortener.entity.user;
 
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -13,10 +14,12 @@ import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ru.chernov.urlshortener.converter.user.UserStatusConverter;
+import ru.chernov.urlshortener.enums.user.UserStatus;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Set;
-import java.util.UUID;
 
 
 @Data
@@ -37,11 +40,12 @@ public class User implements UserDetails {
     @Length(max = 100)
     private String password;
 
+    @Convert(converter = UserStatusConverter.class)
     @NotNull
-    private Boolean active;
+    private UserStatus status;
 
     @NotNull
-    private UUID token;
+    private LocalDateTime registeredAt;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private Set<UserRole> userRoles;
@@ -73,7 +77,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return active;
+        return status == UserStatus.ACTIVE;
     }
 
 

@@ -1,0 +1,9 @@
+ALTER TABLE usr
+    ADD COLUMN status VARCHAR(50);
+
+UPDATE usr
+SET status = CASE WHEN usr.active THEN 'ACTIVE' ELSE 'DELETED' END;
+
+ALTER TABLE usr
+    ALTER COLUMN status SET NOT NULL,
+    DROP COLUMN active;
