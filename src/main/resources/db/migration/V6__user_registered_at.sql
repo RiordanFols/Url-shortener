@@ -1,0 +1,2 @@
+ALTER TABLE usr
+    ADD COLUMN registered_at TIMESTAMP NOT NULL DEFAULT now();

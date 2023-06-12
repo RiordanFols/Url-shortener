@@ -7,9 +7,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.chernov.urlshortener.dto.user.UserRegisterRequest;
 import ru.chernov.urlshortener.entity.user.User;
+import ru.chernov.urlshortener.enums.user.UserStatus;
 import ru.chernov.urlshortener.exception.link.LinkNotFoundException;
 import ru.chernov.urlshortener.exception.user.UserNotFoundException;
 import ru.chernov.urlshortener.repository.UserRepository;
+
+import static ru.chernov.urlshortener.utils.TimeUtil.utcNow;
 
 
 @Service
@@ -43,12 +46,13 @@ public class UserService implements UserDetailsService {
         });
     }
 
-    
+
     public void register(UserRegisterRequest registerRequest) {
         var user = new User();
         user.setUsername(registerRequest.getUsername());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-        user.setActive(true);
+        user.setStatus(UserStatus.ACTIVE);
+        user.setRegisteredAt(utcNow());
         userRepository.save(user);
     }
 

@@ -4,6 +4,7 @@ CREATE TABLE token
     user_id    BIGINT             NOT NULL,
     name       VARCHAR(50)        NOT NULL,
     created_at TIMESTAMP          NOT NULL,
+    status     VARCHAR(50)        NOT NULL,
     PRIMARY KEY (value)
 );
 

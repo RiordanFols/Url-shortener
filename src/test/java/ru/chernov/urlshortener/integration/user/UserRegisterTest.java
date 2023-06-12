@@ -6,6 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import ru.chernov.urlshortener.AbstractTest;
 import ru.chernov.urlshortener.dto.user.UserRegisterRequest;
 import ru.chernov.urlshortener.entity.user.User;
+import ru.chernov.urlshortener.enums.user.UserStatus;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -30,7 +31,7 @@ public class UserRegisterTest extends AbstractTest {
         User user = userService.loadUserByUsername(TEST_USERNAME);
         assertEquals(TEST_USERNAME, user.getUsername());
         assertTrue(passwordEncoder.matches(password, user.getPassword()));
-        assertTrue(user.getActive());
+        assertEquals(UserStatus.ACTIVE, user.getStatus());
     }
 
 
