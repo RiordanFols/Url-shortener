@@ -4,7 +4,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import ru.chernov.urlshortener.entity.Token;
+import ru.chernov.urlshortener.enums.token.TokenStatus;
 import ru.chernov.urlshortener.exception.token.TokenNotFoundException;
+import ru.chernov.urlshortener.exception.token.TokenStatusException;
 import ru.chernov.urlshortener.repository.TokenRepository;
 
 import java.util.UUID;
@@ -31,8 +33,11 @@ public class TokenService {
 
 
     public void validate(UUID value) {
-        Token token = find(value);
-        // TODO: validate token for status (and add status to token)
+        TokenStatus status = find(value).getStatus();
+        if (status != TokenStatus.ACTIVE) {
+            logger.error("Token [{}] has wrong status [{}].", value, status.name());
+            throw new TokenStatusException(status);
+        }
     }
 
 }

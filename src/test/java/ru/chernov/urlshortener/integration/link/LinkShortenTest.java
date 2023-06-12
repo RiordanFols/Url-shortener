@@ -6,6 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import ru.chernov.urlshortener.AbstractTest;
 import ru.chernov.urlshortener.dto.link.LinkShortenRequest;
 import ru.chernov.urlshortener.exception.token.TokenNotFoundException;
+import ru.chernov.urlshortener.exception.token.TokenStatusException;
 
 import java.util.UUID;
 
@@ -59,6 +60,18 @@ public class LinkShortenTest extends AbstractTest {
                         .content(content(request)))
                 .andExpect(status().isNotFound())
                 .andExpect(res -> assertTrue(res.getResolvedException() instanceof TokenNotFoundException));
+    }
+
+
+    @Sql(value = {"/sql/clear.sql", "/sql/link/shorten/wrong-status-token-before.sql"},
+            executionPhase = BEFORE_TEST_METHOD)
+    @Test
+    void wrongStatusToken() throws Exception {
+        LinkShortenRequest request = new LinkShortenRequest("https://google.com", TEST_UUID);
+        mockMvc.perform(postJson(PATH_API_LINKS)
+                        .content(content(request)))
+                .andExpect(status().isConflict())
+                .andExpect(res -> assertTrue(res.getResolvedException() instanceof TokenStatusException));
     }
 
 }

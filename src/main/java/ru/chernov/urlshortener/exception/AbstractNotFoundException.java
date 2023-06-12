@@ -4,11 +4,11 @@ import org.springframework.http.HttpStatus;
 
 
 public abstract class AbstractNotFoundException extends LocalizableResponseStatusException {
-    private static final String NOT_FOUND = ".not-found";
+    private static final String NOT_FOUND_CODE = "not-found";
 
 
-    protected AbstractNotFoundException(String code) {
-        super(HttpStatus.NOT_FOUND, code + NOT_FOUND);
+    protected AbstractNotFoundException(String prefix) {
+        super(HttpStatus.NOT_FOUND, prefix, NOT_FOUND_CODE);
     }
 
 }

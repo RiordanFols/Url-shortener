@@ -23,7 +23,7 @@ public class ApplicationExceptionHandler {
 
     @ExceptionHandler(LocalizableResponseStatusException.class)
     public ResponseEntity<?> handle(LocalizableResponseStatusException e) {
-        String localizedMessage = localizationService.localize(e.getCode());
+        String localizedMessage = localizationService.localize(e.getPrefix() + "." + e.getCode());
         return ResponseEntity
                 .status(e.getStatusCode())
                 .body(Map.of(MESSAGE_FIELD, localizedMessage));
