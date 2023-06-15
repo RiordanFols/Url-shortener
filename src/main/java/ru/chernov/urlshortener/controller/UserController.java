@@ -4,17 +4,20 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import ru.chernov.urlshortener.dto.user.UserLevelRequest;
 import ru.chernov.urlshortener.dto.user.UserRegisterRequest;
 import ru.chernov.urlshortener.dto.user.UserResponse;
 import ru.chernov.urlshortener.entity.user.User;
 import ru.chernov.urlshortener.mapper.UserMapper;
-import ru.chernov.urlshortener.service.UserService;
+import ru.chernov.urlshortener.service.user.UserService;
 
 import static ru.chernov.urlshortener.consts.rest.PathVariables.USER_ID;
 import static ru.chernov.urlshortener.consts.rest.Routes.PATH_API_USERS;
 import static ru.chernov.urlshortener.consts.rest.Routes.PATH_API_USERS_ID;
+import static ru.chernov.urlshortener.consts.rest.Routes.PATH_API_USERS_ID_LEVEL;
 
 
 @RestController
@@ -35,10 +38,17 @@ public class UserController {
         return userMapper.toResponse(user);
     }
 
-    
+
     @PostMapping(PATH_API_USERS)
     public void register(@Valid @RequestBody UserRegisterRequest request) {
         userService.register(request);
     }
 
+
+    @PutMapping(PATH_API_USERS_ID_LEVEL)
+    public void updateLevel(@PathVariable(USER_ID) Long userId,
+                            @RequestBody @Valid UserLevelRequest request) {
+        userService.updateLevel(userId, request.getUserLevelName());
+    }
+    
 }

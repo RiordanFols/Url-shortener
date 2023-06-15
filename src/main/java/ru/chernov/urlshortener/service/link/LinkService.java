@@ -45,20 +45,24 @@ public class LinkService {
             throw new LinkNotFoundException();
         });
 
-        operationService.addOperation(OperationType.REDIRECT, redisLink.getToken());
+        UUID tokenValue = redisLink.getToken();
+        operationService.validateMax(tokenValue);
+
+        operationService.addOperation(OperationType.REDIRECT, tokenValue);
         return redisLink.getLink();
     }
 
 
     @Transactional
     public String shorten(LinkShortenRequest request) {
-        UUID token = request.getToken();
-        tokenService.validate(token);
+        UUID tokenValue = request.getToken();
+        tokenService.validate(tokenValue);
+        operationService.validateMax(tokenValue);
 
-        operationService.addOperation(OperationType.SHORTEN, token);
+        operationService.addOperation(OperationType.SHORTEN, tokenValue);
 
         String shortLink = getShortLink();
-        linkRedisService.write(shortLink, request.getLink(), token);
+        linkRedisService.write(shortLink, request.getLink(), tokenValue);
         return shortLink;
     }
 

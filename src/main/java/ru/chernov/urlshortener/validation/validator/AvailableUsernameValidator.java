@@ -5,7 +5,7 @@ import jakarta.validation.ConstraintValidatorContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
-import ru.chernov.urlshortener.repository.UserRepository;
+import ru.chernov.urlshortener.repository.user.UserRepository;
 import ru.chernov.urlshortener.validation.constraint.AvailableUsername;
 
 

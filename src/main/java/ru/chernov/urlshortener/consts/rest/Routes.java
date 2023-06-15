@@ -9,6 +9,7 @@ public class Routes {
     // USERS
     public static final String PATH_API_USERS = "/api/users";
     public static final String PATH_API_USERS_ID = "/api/users/{USER_ID}";
+    public static final String PATH_API_USERS_ID_LEVEL = "/api/users/{USER_ID}/level";
 
     // TOKENS
     public static final String PATH_API_TOKENS = "/api/tokens";

@@ -10,7 +10,6 @@ import ru.chernov.urlshortener.enums.user.UserStatus;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.chernov.urlshortener.consts.rest.Routes.PATH_API_USERS;
 import static ru.chernov.urlshortener.helper.HttpHelper.postJson;
@@ -21,7 +20,7 @@ public class UserRegisterTest extends AbstractTest {
 
 
     @Test
-    void registerUser() throws Exception {
+    void success() throws Exception {
         String password = "12345";
         UserRegisterRequest request = new UserRegisterRequest(TEST_USERNAME, password);
         mockMvc.perform(postJson(PATH_API_USERS)
@@ -35,10 +34,9 @@ public class UserRegisterTest extends AbstractTest {
     }
 
 
-    @Sql(value = {"/sql/clear.sql", "/sql/user/register/username-exist-before.sql"},
-            executionPhase = BEFORE_TEST_METHOD)
+    @Sql(value = {"/sql/clear.sql", "/sql/user/register/username-exists.sql"})
     @Test
-    void usernameExist() throws Exception {
+    void usernameExists() throws Exception {
         UserRegisterRequest request = new UserRegisterRequest(TEST_USERNAME, "12345");
         mockMvc.perform(postJson(PATH_API_USERS)
                         .content(content(request)))

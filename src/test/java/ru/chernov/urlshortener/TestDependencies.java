@@ -9,9 +9,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import ru.chernov.urlshortener.repository.OperationRepository;
 import ru.chernov.urlshortener.repository.TokenRepository;
-import ru.chernov.urlshortener.repository.UserRepository;
-import ru.chernov.urlshortener.service.UserService;
+import ru.chernov.urlshortener.repository.user.UserRepository;
 import ru.chernov.urlshortener.service.link.LinkRedisService;
+import ru.chernov.urlshortener.service.link.LinkService;
+import ru.chernov.urlshortener.service.user.UserService;
 
 
 @AutoConfigureMockMvc
@@ -36,5 +37,7 @@ public class TestDependencies {
     protected OperationRepository operationRepository;
     @Autowired
     protected TokenRepository tokenRepository;
+    @Autowired
+    protected LinkService linkService;
 
 }
