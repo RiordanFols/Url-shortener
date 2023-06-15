@@ -1,5 +1,5 @@
 UPDATE user_level
-SET month_max = 1
+SET month_max = 2
 WHERE name = 'NONE';
 
 INSERT INTO token(value, user_id, name, created_at, status)

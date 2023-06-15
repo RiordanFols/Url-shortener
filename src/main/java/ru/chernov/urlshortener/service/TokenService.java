@@ -34,7 +34,7 @@ public class TokenService {
 
 
     public Token find(UUID value) {
-        return tokenRepository.findById(value.toString()).orElseThrow(() -> {
+        return tokenRepository.findByValue(value.toString()).orElseThrow(() -> {
             logger.error("Token [{}] not found.", value);
             throw new TokenNotFoundException();
         });
