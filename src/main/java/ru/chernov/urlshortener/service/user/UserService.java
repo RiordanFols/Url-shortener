@@ -1,4 +1,4 @@
-package ru.chernov.urlshortener.service;
+package ru.chernov.urlshortener.service.user;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,10 +9,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.chernov.urlshortener.dto.user.UserRegisterRequest;
 import ru.chernov.urlshortener.entity.user.User;
+import ru.chernov.urlshortener.enums.user.UserLevelName;
 import ru.chernov.urlshortener.enums.user.UserStatus;
 import ru.chernov.urlshortener.exception.link.LinkNotFoundException;
 import ru.chernov.urlshortener.exception.user.UserNotFoundException;
-import ru.chernov.urlshortener.repository.UserRepository;
+import ru.chernov.urlshortener.repository.user.UserRepository;
 
 import static ru.chernov.urlshortener.utils.TimeUtil.utcNow;
 
@@ -21,12 +22,15 @@ import static ru.chernov.urlshortener.utils.TimeUtil.utcNow;
 public class UserService implements UserDetailsService {
     private static final Logger logger = LogManager.getLogger(UserService.class);
 
+    private final UserLevelService userLevelService;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
 
 
-    public UserService(PasswordEncoder passwordEncoder,
+    public UserService(UserLevelService userLevelService,
+                       PasswordEncoder passwordEncoder,
                        UserRepository userRepository) {
+        this.userLevelService = userLevelService;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
     }
@@ -62,6 +66,7 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setStatus(UserStatus.ACTIVE);
         user.setRegisteredAt(utcNow());
+        user.setLevel(userLevelService.findByName(UserLevelName.NONE.getDbValue()));
         userRepository.save(user);
     }
 

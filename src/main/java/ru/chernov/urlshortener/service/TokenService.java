@@ -10,6 +10,7 @@ import ru.chernov.urlshortener.enums.token.TokenStatus;
 import ru.chernov.urlshortener.exception.token.TokenNotFoundException;
 import ru.chernov.urlshortener.exception.token.TokenStatusException;
 import ru.chernov.urlshortener.repository.TokenRepository;
+import ru.chernov.urlshortener.service.user.UserService;
 
 import java.util.UUID;
 
