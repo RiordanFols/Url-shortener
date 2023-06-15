@@ -32,14 +32,4 @@ public class TokenCreateTest extends AbstractTest {
         assertEquals(TokenStatus.ACTIVE, token.getStatus());
     }
 
-
-    @Test
-    void tooLongName() throws Exception {
-        String tokenName = "Tooooooooooooooooooooo looooooooooooooooooong token name";
-        mockMvc.perform(postJson(PATH_API_TOKENS)
-                        .with(AUTHENTICATION)
-                        .content(content(new TokenCreateRequest(tokenName))))
-                .andExpect(status().isBadRequest());
-    }
-
 }

@@ -13,42 +13,34 @@ import static ru.chernov.urlshortener.helper.HttpHelper.getJson;
 
 
 public class UserGetTest extends AbstractTest {
+    private static final Long TEST_USER_ID = 9_000_000_101L;
+
 
     @Sql(value = {"/sql/clear.sql", "/sql/user/get/success.sql"})
     @Test
     void success() throws Exception {
-        long id = 9_000_000_100L;
-        mockMvc.perform(getJson(PATH_API_USERS_ID, id)
-                        .with(AUTHENTICATION))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isNotEmpty())
-                .andExpect(jsonPath("$.id").value(id))
-                .andExpect(jsonPath("$.username").isNotEmpty());
+        userFound();
     }
 
 
     @Sql(value = {"/sql/clear.sql", "/sql/user/get/blocked.sql"})
     @Test
     void blocked() throws Exception {
-        long id = 9_000_000_101L;
-        mockMvc.perform(getJson(PATH_API_USERS_ID, id)
-                        .with(AUTHENTICATION))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isNotEmpty())
-                .andExpect(jsonPath("$.id").value(id))
-                .andExpect(jsonPath("$.username").isNotEmpty());
+        userFound();
     }
 
 
+    @Sql(value = {"/sql/clear.sql", "/sql/user/get/frozen.sql"})
     @Test
     void frozen() throws Exception {
-        //TODO - 200
+        userFound();
     }
 
 
+    @Sql(value = {"/sql/clear.sql", "/sql/user/get/deleted.sql"})
     @Test
     void deleted() throws Exception {
-        //TODO - 200
+        userFound();
     }
 
 
@@ -58,6 +50,16 @@ public class UserGetTest extends AbstractTest {
                         .with(AUTHENTICATION))
                 .andExpect(status().isNotFound())
                 .andExpect(res -> assertTrue(res.getResolvedException() instanceof UserNotFoundException));
+    }
+
+
+    private void userFound() throws Exception {
+        mockMvc.perform(getJson(PATH_API_USERS_ID, TEST_USER_ID)
+                        .with(AUTHENTICATION))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isNotEmpty())
+                .andExpect(jsonPath("$.id").value(TEST_USER_ID))
+                .andExpect(jsonPath("$.username").isNotEmpty());
     }
 
 }
