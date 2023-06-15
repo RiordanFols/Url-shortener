@@ -74,4 +74,22 @@ public class LinkShortenTest extends AbstractTest {
                 .andExpect(res -> assertTrue(res.getResolvedException() instanceof TokenStatusException));
     }
 
+
+    @Test
+    void frozenUser() throws Exception {
+        // TODO: 200
+    }
+
+
+    @Test
+    void deletedUser() throws Exception {
+        // TODO: 409
+    }
+
+
+    @Test
+    void blockedUser() throws Exception {
+        // TODO: 409
+    }
+
 }

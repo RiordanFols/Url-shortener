@@ -7,6 +7,7 @@ import ru.chernov.urlshortener.dto.token.TokenCreateRequest;
 import ru.chernov.urlshortener.entity.Token;
 import ru.chernov.urlshortener.entity.user.User;
 import ru.chernov.urlshortener.enums.token.TokenStatus;
+import ru.chernov.urlshortener.enums.user.UserStatus;
 import ru.chernov.urlshortener.exception.token.TokenNotFoundException;
 import ru.chernov.urlshortener.exception.token.TokenStatusException;
 import ru.chernov.urlshortener.repository.TokenRepository;
@@ -41,11 +42,14 @@ public class TokenService {
 
 
     public void validate(UUID value) {
-        TokenStatus status = find(value).getStatus();
+        Token token = find(value);
+
+        TokenStatus status = token.getStatus();
         if (status != TokenStatus.ACTIVE) {
             logger.error("Token [{}] has wrong status [{}].", value, status.name());
             throw new TokenStatusException(status);
         }
+        userService.validate(token.getUser(), UserStatus.TOKEN_WORKS_STATUSES);
     }
 
 

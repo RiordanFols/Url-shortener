@@ -13,7 +13,10 @@ import ru.chernov.urlshortener.enums.user.UserLevelName;
 import ru.chernov.urlshortener.enums.user.UserStatus;
 import ru.chernov.urlshortener.exception.link.LinkNotFoundException;
 import ru.chernov.urlshortener.exception.user.UserNotFoundException;
+import ru.chernov.urlshortener.exception.user.UserStatusException;
 import ru.chernov.urlshortener.repository.user.UserRepository;
+
+import java.util.Set;
 
 import static ru.chernov.urlshortener.utils.TimeUtil.utcNow;
 
@@ -44,10 +47,9 @@ public class UserService implements UserDetailsService {
 
     @Override
     public User loadUserByUsername(String username) {
-        logger.info("Check username [{}].", username);
         return userRepository.findByUsername(username).orElseThrow(() -> {
             logger.error("User username=[{}] not found.", username);
-            throw new LinkNotFoundException();
+            return new LinkNotFoundException();
         });
     }
 
@@ -60,6 +62,15 @@ public class UserService implements UserDetailsService {
     }
 
 
+    public void validate(User user, Set<UserStatus> allowedStatuses) {
+        UserStatus status = user.getStatus();
+        if (!allowedStatuses.contains(status)) {
+            logger.error("User [{}] has status [{}].", user.getId(), status);
+            throw new UserStatusException(status);
+        }
+    }
+
+
     public void register(UserRegisterRequest registerRequest) {
         var user = new User();
         user.setUsername(registerRequest.getUsername());
@@ -67,6 +78,14 @@ public class UserService implements UserDetailsService {
         user.setStatus(UserStatus.ACTIVE);
         user.setRegisteredAt(utcNow());
         user.setLevel(userLevelService.findByName(UserLevelName.NONE.getDbValue()));
+        userRepository.save(user);
+    }
+
+
+    public void updateLevel(Long userId, UserLevelName userLevelName) {
+        var user = findById(userId);
+        validate(user, UserStatus.USER_WORKS_STATUSES);
+        user.setLevel(userLevelService.findByName(userLevelName.getDbValue()));
         userRepository.save(user);
     }
 

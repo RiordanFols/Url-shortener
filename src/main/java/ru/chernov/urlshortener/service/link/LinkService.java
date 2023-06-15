@@ -40,6 +40,7 @@ public class LinkService {
 
     @Transactional
     public String restore(String shortLink) {
+        // TODO: ограничения по уровням
         RedisLinkDto redisLink = linkRedisService.read(linkProperties.getPrefix() + shortLink).orElseThrow(() -> {
             logger.error("Cannot found short link [{}].", shortLink);
             throw new LinkNotFoundException();
@@ -52,6 +53,7 @@ public class LinkService {
 
     @Transactional
     public String shorten(LinkShortenRequest request) {
+        // TODO: ограничения по уровням
         UUID token = request.getToken();
         tokenService.validate(token);
 
