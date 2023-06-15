@@ -13,7 +13,6 @@ import java.util.UUID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.chernov.urlshortener.consts.rest.Routes.PATH_API_LINKS;
 import static ru.chernov.urlshortener.helper.HttpHelper.postJson;
@@ -24,8 +23,7 @@ public class LinkShortenTest extends AbstractTest {
     private static final UUID TEST_UUID = UUID.fromString("92f76c0c-2de1-4ad8-8116-10075572d564");
 
 
-    @Sql(value = {"/sql/clear.sql", "/sql/link/shorten/success.sql"},
-            executionPhase = BEFORE_TEST_METHOD)
+    @Sql(value = {"/sql/clear.sql", "/sql/link/shorten/success.sql"})
     @Test
     void success() throws Exception {
         LinkShortenRequest request = new LinkShortenRequest("https://google.com", TEST_UUID);
@@ -41,8 +39,7 @@ public class LinkShortenTest extends AbstractTest {
     }
 
 
-    @Sql(value = {"/sql/clear.sql", "/sql/link/shorten/too-long-link.sql"},
-            executionPhase = BEFORE_TEST_METHOD)
+    @Sql(value = {"/sql/clear.sql", "/sql/link/shorten/too-long-link.sql"})
     @Test
     void tooLongLink() throws Exception {
         LinkShortenRequest request = new LinkShortenRequest(nextAlphanumeric(1002), TEST_UUID);
@@ -63,8 +60,7 @@ public class LinkShortenTest extends AbstractTest {
     }
 
 
-    @Sql(value = {"/sql/clear.sql", "/sql/link/shorten/frozen-token.sql"},
-            executionPhase = BEFORE_TEST_METHOD)
+    @Sql(value = {"/sql/clear.sql", "/sql/link/shorten/frozen-token.sql"})
     @Test
     void frozenToken() throws Exception {
         LinkShortenRequest request = new LinkShortenRequest("https://google.com", TEST_UUID);

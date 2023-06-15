@@ -13,11 +13,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.io.IOException;
 
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
-import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_METHOD;
 
 
 @ExtendWith(SpringExtension.class)
-@Sql(value = "/sql/clear.sql", executionPhase = BEFORE_TEST_METHOD)
+@Sql(value = "/sql/clear.sql")
 public class AbstractTest extends TestDependencies {
     protected static final Long TEST_USER_ID = 9_000_000_000L;
     protected static final UserRequestPostProcessor AUTHENTICATION = SecurityMockMvcRequestPostProcessors.user("TEST_USER").password("PASSWORD");
