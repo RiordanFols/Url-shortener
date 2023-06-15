@@ -17,7 +17,7 @@ import static ru.chernov.urlshortener.helper.HttpHelper.postJson;
 public class TokenCreateTest extends AbstractTest {
 
     @Test
-    void create() throws Exception {
+    void success() throws Exception {
         String tokenName = "My token";
         mockMvc.perform(postJson(PATH_API_TOKENS)
                         .with(AUTHENTICATION)
@@ -34,7 +34,7 @@ public class TokenCreateTest extends AbstractTest {
 
 
     @Test
-    void createTooLongName() throws Exception {
+    void tooLongName() throws Exception {
         String tokenName = "Tooooooooooooooooooooo looooooooooooooooooong token name";
         mockMvc.perform(postJson(PATH_API_TOKENS)
                         .with(AUTHENTICATION)

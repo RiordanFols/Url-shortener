@@ -18,7 +18,7 @@ public class UserGetTest extends AbstractTest {
     @Sql(value = {"/sql/clear.sql", "/sql/user/get/get-before.sql"},
             executionPhase = BEFORE_TEST_METHOD)
     @Test
-    void get() throws Exception {
+    void success() throws Exception {
         long id = 9_000_000_100L;
         mockMvc.perform(getJson(PATH_API_USERS_ID, id)
                         .with(AUTHENTICATION))
@@ -32,7 +32,7 @@ public class UserGetTest extends AbstractTest {
     @Sql(value = {"/sql/clear.sql", "/sql/user/get/get-inactive-before.sql"},
             executionPhase = BEFORE_TEST_METHOD)
     @Test
-    void getInactive() throws Exception {
+    void blocked() throws Exception {
         long id = 9_000_000_101L;
         mockMvc.perform(getJson(PATH_API_USERS_ID, id)
                         .with(AUTHENTICATION))
@@ -40,6 +40,18 @@ public class UserGetTest extends AbstractTest {
                 .andExpect(jsonPath("$").isNotEmpty())
                 .andExpect(jsonPath("$.id").value(id))
                 .andExpect(jsonPath("$.username").isNotEmpty());
+    }
+
+
+    @Test
+    void frozen() throws Exception {
+        //TODO - 200
+    }
+
+
+    @Test
+    void deleted() throws Exception {
+        //TODO - 200
     }
 
 

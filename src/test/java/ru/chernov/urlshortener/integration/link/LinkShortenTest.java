@@ -27,7 +27,7 @@ public class LinkShortenTest extends AbstractTest {
     @Sql(value = {"/sql/clear.sql", "/sql/link/shorten/shorten-link-before.sql"},
             executionPhase = BEFORE_TEST_METHOD)
     @Test
-    void shortenLink() throws Exception {
+    void success() throws Exception {
         LinkShortenRequest request = new LinkShortenRequest("https://google.com", TEST_UUID);
         String shortLink = mockMvc.perform(postJson(PATH_API_LINKS)
                         .content(content(request)))
@@ -90,6 +90,18 @@ public class LinkShortenTest extends AbstractTest {
     @Test
     void blockedUser() throws Exception {
         // TODO: 409
+    }
+
+
+    @Test
+    void tooManyOperationsPerMinute() throws Exception {
+        // TODO - 409
+    }
+
+
+    @Test
+    void tooManyOperationsPerMonth() throws Exception {
+        // TODO - 409
     }
 
 }
