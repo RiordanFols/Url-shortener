@@ -7,32 +7,33 @@ import ru.chernov.urlshortener.AbstractTest;
 public class UserUpdateLevelTest extends AbstractTest {
 
     @Test
-    void updateLevel() throws Exception {
+    void success() throws Exception {
         // TODO: 200
     }
 
 
     @Test
-    void updateLevelNotFound() throws Exception {
+    void notFound() throws Exception {
         // TODO: 404
     }
 
 
     // TODO: to Unit tests
     @Test
-    void updateLevelDeletedUser() throws Exception {
+    void deletedUser() throws Exception {
         // TODO: 409
     }
 
 
     @Test
-    void updateLevelBlockedUser() throws Exception {
+    void blockedUser() throws Exception {
         // TODO: 409
     }
 
 
     @Test
-    void updateLevelFrozenUser() throws Exception {
+    void frozenUser() throws Exception {
         // TODO: 409
     }
+
 }

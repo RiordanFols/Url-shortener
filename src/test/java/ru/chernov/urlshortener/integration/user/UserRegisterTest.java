@@ -21,7 +21,7 @@ public class UserRegisterTest extends AbstractTest {
 
 
     @Test
-    void registerUser() throws Exception {
+    void success() throws Exception {
         String password = "12345";
         UserRegisterRequest request = new UserRegisterRequest(TEST_USERNAME, password);
         mockMvc.perform(postJson(PATH_API_USERS)
@@ -38,7 +38,7 @@ public class UserRegisterTest extends AbstractTest {
     @Sql(value = {"/sql/clear.sql", "/sql/user/register/username-exist-before.sql"},
             executionPhase = BEFORE_TEST_METHOD)
     @Test
-    void usernameExist() throws Exception {
+    void usernameExists() throws Exception {
         UserRegisterRequest request = new UserRegisterRequest(TEST_USERNAME, "12345");
         mockMvc.perform(postJson(PATH_API_USERS)
                         .content(content(request)))
