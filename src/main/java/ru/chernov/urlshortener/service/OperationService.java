@@ -64,7 +64,7 @@ public class OperationService {
         Long lastMonthOperationsCount = operationRepository.countByToken(tokenValue.toString(), createdAtFrom);
 
         Token token = tokenService.find(tokenValue);
-        if (lastMonthOperationsCount > token.getUser().getLevel().getMinuteMax()) {
+        if (lastMonthOperationsCount > token.getUser().getLevel().getMonthMax()) {
             logger.warn("Operation cannot be done, too many in last minute.");
             throw new TooManyMonthOperationsException();
         }

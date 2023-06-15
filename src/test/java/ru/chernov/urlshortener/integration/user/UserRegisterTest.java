@@ -35,7 +35,7 @@ public class UserRegisterTest extends AbstractTest {
     }
 
 
-    @Sql(value = {"/sql/clear.sql", "/sql/user/register/username-exist-before.sql"},
+    @Sql(value = {"/sql/clear.sql", "/sql/user/register/username-exists.sql"},
             executionPhase = BEFORE_TEST_METHOD)
     @Test
     void usernameExists() throws Exception {

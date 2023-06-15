@@ -24,7 +24,7 @@ public class LinkShortenTest extends AbstractTest {
     private static final UUID TEST_UUID = UUID.fromString("92f76c0c-2de1-4ad8-8116-10075572d564");
 
 
-    @Sql(value = {"/sql/clear.sql", "/sql/link/shorten/shorten-link-before.sql"},
+    @Sql(value = {"/sql/clear.sql", "/sql/link/shorten/success.sql"},
             executionPhase = BEFORE_TEST_METHOD)
     @Test
     void success() throws Exception {
@@ -41,7 +41,7 @@ public class LinkShortenTest extends AbstractTest {
     }
 
 
-    @Sql(value = {"/sql/clear.sql", "/sql/link/shorten/too-long-link-before.sql"},
+    @Sql(value = {"/sql/clear.sql", "/sql/link/shorten/too-long-link.sql"},
             executionPhase = BEFORE_TEST_METHOD)
     @Test
     void tooLongLink() throws Exception {
@@ -63,15 +63,27 @@ public class LinkShortenTest extends AbstractTest {
     }
 
 
-    @Sql(value = {"/sql/clear.sql", "/sql/link/shorten/wrong-status-token-before.sql"},
+    @Sql(value = {"/sql/clear.sql", "/sql/link/shorten/frozen-token.sql"},
             executionPhase = BEFORE_TEST_METHOD)
     @Test
-    void wrongStatusToken() throws Exception {
+    void frozenToken() throws Exception {
         LinkShortenRequest request = new LinkShortenRequest("https://google.com", TEST_UUID);
         mockMvc.perform(postJson(PATH_API_LINKS)
                         .content(content(request)))
                 .andExpect(status().isConflict())
                 .andExpect(res -> assertTrue(res.getResolvedException() instanceof TokenStatusException));
+    }
+
+
+    @Test
+    void deletedToken() throws Exception {
+        // TODO: 409
+    }
+
+
+    @Test
+    void blockedToken() throws Exception {
+        // TODO: 409
     }
 
 
@@ -94,13 +106,13 @@ public class LinkShortenTest extends AbstractTest {
 
 
     @Test
-    void tooManyOperationsPerMinute() throws Exception {
+    void tooManyMinuteOperations() throws Exception {
         // TODO - 409
     }
 
 
     @Test
-    void tooManyOperationsPerMonth() throws Exception {
+    void tooManyMonthOperations() throws Exception {
         // TODO - 409
     }
 

@@ -18,7 +18,6 @@ public class UserUpdateLevelTest extends AbstractTest {
     }
 
 
-    // TODO: to Unit tests
     @Test
     void deletedUser() throws Exception {
         // TODO: 409
