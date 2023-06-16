@@ -11,7 +11,6 @@ import ru.chernov.urlshortener.exception.user.UserStatusException;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.chernov.urlshortener.consts.rest.Routes.PATH_API_USERS_ID_LEVEL;
-import static ru.chernov.urlshortener.helper.HttpHelper.putJson;
 
 
 public class UserUpdateLevelTest extends AbstractTest {

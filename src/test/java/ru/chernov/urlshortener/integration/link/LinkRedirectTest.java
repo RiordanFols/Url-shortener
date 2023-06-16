@@ -12,7 +12,6 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.chernov.urlshortener.helper.HttpHelper.getJson;
 
 
 public class LinkRedirectTest extends AbstractTest {

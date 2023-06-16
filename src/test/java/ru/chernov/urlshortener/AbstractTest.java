@@ -3,15 +3,17 @@ package ru.chernov.urlshortener;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.http.MediaType;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.UserRequestPostProcessor;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.io.IOException;
-
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.put;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 
@@ -24,6 +26,7 @@ public class AbstractTest extends TestDependencies {
 
     @BeforeEach
     protected void setUp() {
+        redissonClient.getKeys().deleteByPattern("*");
         this.mockMvc = MockMvcBuilders
                 .webAppContextSetup(this.context)
                 .addFilter(((request, response, chain) -> {
@@ -41,8 +44,18 @@ public class AbstractTest extends TestDependencies {
     }
 
 
-    protected <T> T readContent(MvcResult mvcResult, Class<T> clazz) throws IOException {
-        return objectMapper.readValue(mvcResult.getResponse().getContentAsByteArray(), clazz);
+    protected static MockHttpServletRequestBuilder getJson(String url, Object... urlVariables) {
+        return get(url, urlVariables).contentType(MediaType.APPLICATION_JSON);
+    }
+
+
+    protected static MockHttpServletRequestBuilder postJson(String url, Object... urlVariables) {
+        return post(url, urlVariables).contentType(MediaType.APPLICATION_JSON);
+    }
+
+
+    protected static MockHttpServletRequestBuilder putJson(String url, Object... urlVariables) {
+        return put(url, urlVariables).contentType(MediaType.APPLICATION_JSON);
     }
 
 }

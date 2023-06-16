@@ -11,7 +11,6 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.chernov.urlshortener.consts.rest.Routes.PATH_API_TOKENS;
-import static ru.chernov.urlshortener.helper.HttpHelper.postJson;
 
 
 public class TokenCreateTest extends AbstractTest {

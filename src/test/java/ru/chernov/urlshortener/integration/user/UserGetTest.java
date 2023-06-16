@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.chernov.urlshortener.consts.rest.Routes.PATH_API_USERS_ID;
-import static ru.chernov.urlshortener.helper.HttpHelper.getJson;
 
 
 public class UserGetTest extends AbstractTest {
