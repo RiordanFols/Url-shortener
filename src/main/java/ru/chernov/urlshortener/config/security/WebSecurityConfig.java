@@ -39,6 +39,7 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(requests ->
                         requests
                                 .requestMatchers("/", "/*").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/v3/api-docs", "/v3/api-docs/**", "/swagger-ui/**").anonymous()
                                 .requestMatchers(HttpMethod.POST, PATH_API_USERS).anonymous()
                                 .requestMatchers(HttpMethod.GET, PATH_SHORT_LINK).anonymous()
                                 .requestMatchers(HttpMethod.POST, PATH_API_LINKS).anonymous()
