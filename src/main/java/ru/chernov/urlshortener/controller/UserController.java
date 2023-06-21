@@ -1,5 +1,9 @@
 package ru.chernov.urlshortener.controller;
 
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,6 +36,13 @@ public class UserController {
     }
 
 
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Found user",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = UserResponse.class)
+                    )}),
+            @ApiResponse(responseCode = "400", description = "Invalid id supplied", content = @Content),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content)})
     @GetMapping(PATH_API_USERS_ID)
     public UserResponse get(@PathVariable(USER_ID) Long userId) {
         User user = userService.findById(userId);
@@ -50,5 +61,5 @@ public class UserController {
                             @RequestBody @Valid UserLevelRequest request) {
         userService.updateLevel(userId, request.getUserLevelName());
     }
-    
+
 }
