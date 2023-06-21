@@ -71,14 +71,14 @@ public class UserService implements UserDetailsService {
     }
 
 
-    public void register(UserRegisterRequest registerRequest) {
+    public User register(UserRegisterRequest registerRequest) {
         var user = new User();
         user.setUsername(registerRequest.getUsername());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setStatus(UserStatus.ACTIVE);
         user.setRegisteredAt(utcNow());
         user.setLevel(userLevelService.findByName(UserLevelName.NONE.getDbValue()));
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
 

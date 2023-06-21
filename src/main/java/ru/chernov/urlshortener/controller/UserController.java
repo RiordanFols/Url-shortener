@@ -1,5 +1,9 @@
 package ru.chernov.urlshortener.controller;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +18,7 @@ import ru.chernov.urlshortener.entity.user.User;
 import ru.chernov.urlshortener.mapper.UserMapper;
 import ru.chernov.urlshortener.service.user.UserService;
 
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static ru.chernov.urlshortener.consts.rest.PathVariables.USER_ID;
 import static ru.chernov.urlshortener.consts.rest.Routes.PATH_API_USERS;
 import static ru.chernov.urlshortener.consts.rest.Routes.PATH_API_USERS_ID;
@@ -32,23 +37,37 @@ public class UserController {
     }
 
 
+    @ApiResponse(responseCode = "200", description = "Found user",
+            content = {@Content(mediaType = APPLICATION_JSON_VALUE,
+                    schema = @Schema(implementation = UserResponse.class))})
+    @ApiResponse(responseCode = "400", description = "Invalid id supplied", content = @Content)
+    @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
     @GetMapping(PATH_API_USERS_ID)
-    public UserResponse get(@PathVariable(USER_ID) Long userId) {
+    public UserResponse get(@PathVariable(USER_ID) @Parameter(example = "1") Long userId) {
         User user = userService.findById(userId);
         return userMapper.toResponse(user);
     }
 
 
+    @ApiResponse(responseCode = "200", description = "User registered",
+            content = {@Content(mediaType = APPLICATION_JSON_VALUE,
+                    schema = @Schema(implementation = UserResponse.class))})
+    @ApiResponse(responseCode = "400", description = "Invalid request or username already exists", content = @Content)
     @PostMapping(PATH_API_USERS)
-    public void register(@Valid @RequestBody UserRegisterRequest request) {
-        userService.register(request);
+    public UserResponse register(@Valid @RequestBody UserRegisterRequest request) {
+        User user = userService.register(request);
+        return userMapper.toResponse(user);
     }
 
 
+    @ApiResponse(responseCode = "200", description = "Found user", content = @Content)
+    @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content)
+    @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+    @ApiResponse(responseCode = "409", description = "User not valid for operation", content = @Content)
     @PutMapping(PATH_API_USERS_ID_LEVEL)
-    public void updateLevel(@PathVariable(USER_ID) Long userId,
+    public void updateLevel(@PathVariable(USER_ID) @Parameter(example = "1") Long userId,
                             @RequestBody @Valid UserLevelRequest request) {
         userService.updateLevel(userId, request.getUserLevelName());
     }
-    
+
 }
