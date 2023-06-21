@@ -42,7 +42,7 @@ public class LinkController {
 
     @ApiResponse(responseCode = "200", description = "Success shorten",
             content = {@Content(mediaType = APPLICATION_JSON_VALUE,
-                    schema = @Schema(implementation = String.class))})
+                    schema = @Schema(example = "http://localhost:8080/et3u1p"))})
     @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content)
     @ApiResponse(responseCode = "404", description = "Token not found", content = @Content)
     @ApiResponse(responseCode = "409", description = "Invalid token/user or too many operations for token", content = @Content)
