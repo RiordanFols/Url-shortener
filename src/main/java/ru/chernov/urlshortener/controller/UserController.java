@@ -1,5 +1,6 @@
 package ru.chernov.urlshortener.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -37,6 +38,7 @@ public class UserController {
     }
 
 
+    @Operation(summary = "Get user")
     @ApiResponse(responseCode = "200", description = "Found user",
             content = {@Content(mediaType = APPLICATION_JSON_VALUE,
                     schema = @Schema(implementation = UserResponse.class))})
@@ -49,6 +51,7 @@ public class UserController {
     }
 
 
+    @Operation(summary = "Register new user")
     @ApiResponse(responseCode = "200", description = "User registered",
             content = {@Content(mediaType = APPLICATION_JSON_VALUE,
                     schema = @Schema(implementation = UserResponse.class))})
@@ -60,6 +63,7 @@ public class UserController {
     }
 
 
+    @Operation(summary = "Update user level")
     @ApiResponse(responseCode = "200", description = "Found user", content = @Content)
     @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content)
     @ApiResponse(responseCode = "404", description = "User not found", content = @Content)

@@ -1,5 +1,6 @@
 package ru.chernov.urlshortener.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -30,6 +31,7 @@ public class LinkController {
     }
 
 
+    @Operation(summary = "Redirect by short link")
     @ApiResponse(responseCode = "302", description = "Success redirect", content = @Content)
     @ApiResponse(responseCode = "400", description = "Invalid link", content = @Content)
     @ApiResponse(responseCode = "404", description = "Link/Token not found", content = @Content)
@@ -40,6 +42,7 @@ public class LinkController {
     }
 
 
+    @Operation(summary = "Shorten link")
     @ApiResponse(responseCode = "200", description = "Success shorten",
             content = {@Content(mediaType = APPLICATION_JSON_VALUE,
                     schema = @Schema(example = "http://localhost:8080/et3u1p"))})
