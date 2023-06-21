@@ -1,5 +1,6 @@
 package ru.chernov.urlshortener.dto.user;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,10 +13,12 @@ import ru.chernov.urlshortener.validation.constraint.AvailableUsername;
 @Data
 public class UserRegisterRequest {
 
+    @Schema(example = "p.chernov")
     @AvailableUsername
     @NotNull
     private String username;
 
+    @Schema(example = "qwerty")
     @NotNull
     private String password;
 
