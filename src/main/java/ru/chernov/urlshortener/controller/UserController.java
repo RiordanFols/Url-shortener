@@ -44,7 +44,7 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Invalid id supplied", content = @Content),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content)})
     @GetMapping(PATH_API_USERS_ID)
-    public UserResponse get(@PathVariable(USER_ID) @Parameter(name = "USER_ID", example = "1") Long userId) {
+    public UserResponse get(@PathVariable(USER_ID) @Parameter(example = "1") Long userId) {
         User user = userService.findById(userId);
         return userMapper.toResponse(user);
     }
@@ -68,7 +68,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
             @ApiResponse(responseCode = "409", description = "User not valid for operation", content = @Content)})
     @PutMapping(PATH_API_USERS_ID_LEVEL)
-    public void updateLevel(@PathVariable(USER_ID) Long userId,
+    public void updateLevel(@PathVariable(USER_ID) @Parameter(example = "1") Long userId,
                             @RequestBody @Valid UserLevelRequest request) {
         userService.updateLevel(userId, request.getUserLevelName());
     }
