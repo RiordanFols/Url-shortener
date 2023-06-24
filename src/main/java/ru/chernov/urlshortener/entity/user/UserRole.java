@@ -9,7 +9,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import ru.chernov.urlshortener.converter.user.UserRoleNameConverter;
@@ -17,6 +19,8 @@ import ru.chernov.urlshortener.enums.user.UserRoleName;
 
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "user_role")
 @Entity
 @IdClass(value = UserRoleId.class)

@@ -9,12 +9,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.chernov.urlshortener.dto.user.UserRegisterRequest;
 import ru.chernov.urlshortener.entity.user.User;
+import ru.chernov.urlshortener.entity.user.UserRole;
 import ru.chernov.urlshortener.enums.user.UserLevelName;
+import ru.chernov.urlshortener.enums.user.UserRoleName;
 import ru.chernov.urlshortener.enums.user.UserStatus;
 import ru.chernov.urlshortener.exception.user.UserNotFoundException;
 import ru.chernov.urlshortener.exception.user.UserStatusException;
 import ru.chernov.urlshortener.exception.user.UserWrongPasswordException;
 import ru.chernov.urlshortener.repository.user.UserRepository;
+import ru.chernov.urlshortener.repository.user.UserRoleRepository;
 
 import java.util.Set;
 
@@ -28,14 +31,17 @@ public class UserService implements UserDetailsService {
     private final UserLevelService userLevelService;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final UserRoleRepository userRoleRepository;
 
 
     public UserService(UserLevelService userLevelService,
                        PasswordEncoder passwordEncoder,
-                       UserRepository userRepository) {
+                       UserRepository userRepository,
+                       UserRoleRepository userRoleRepository) {
         this.userLevelService = userLevelService;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
+        this.userRoleRepository = userRoleRepository;
     }
 
 
@@ -90,7 +96,12 @@ public class UserService implements UserDetailsService {
         user.setStatus(UserStatus.ACTIVE);
         user.setRegisteredAt(utcNow());
         user.setLevel(userLevelService.findByName(UserLevelName.NONE.getDbValue()));
-        return userRepository.save(user);
+        user = userRepository.save(user);
+
+        var userRole = new UserRole(user, UserRoleName.BASIC);
+        userRoleRepository.save(userRole);
+
+        return user;
     }
 
 
