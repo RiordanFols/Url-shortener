@@ -2,9 +2,6 @@ DELETE
 FROM token;
 
 DELETE
-FROM user_role;
-
-DELETE
 FROM usr;
 
 DELETE
@@ -29,6 +26,3 @@ VALUES ('NONE', 6, 1000, 0.00),
 INSERT INTO usr(id, username, password, registered_at, status, user_level)
 VALUES (9000000000, 'TEST_USER', '$2a$08$IRcWo0LmOXvolKAVn0x9FeUEcXkRvsMoBxzAdOfiF2wR6iQBLvHi.',
         now() at time zone 'utc', 'ACTIVE', 'NONE');
-
-INSERT INTO user_role(user_id, role)
-VALUES (9000000000, 'BASIC');

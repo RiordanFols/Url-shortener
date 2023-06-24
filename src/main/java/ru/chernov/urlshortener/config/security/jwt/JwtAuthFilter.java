@@ -15,6 +15,8 @@ import ru.chernov.urlshortener.entity.user.User;
 
 import java.io.IOException;
 
+import static com.fasterxml.jackson.core.JsonEncoding.UTF8;
+
 
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
@@ -30,6 +32,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
+        request.setCharacterEncoding(UTF8.getJavaName());
+        response.setCharacterEncoding(UTF8.getJavaName());
+
         String jwt = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (jwt != null) {

@@ -23,14 +23,18 @@ import static ru.chernov.urlshortener.utils.TimeUtil.utcNow;
 @Service
 public class JwtService {
     private static final Logger logger = LogManager.getLogger(JwtService.class);
+    private static final String BEARER_PREFIX = "Bearer ";
     private static final String AUTHORITIES = "authorities";
 
+    private final CustomJwtBuilder customJwtBuilder;
     private final UserService userService;
     private final JwtProperties jwtProperties;
 
 
-    public JwtService(UserService userService,
+    public JwtService(CustomJwtBuilder customJwtBuilder,
+                      UserService userService,
                       JwtProperties jwtProperties) {
+        this.customJwtBuilder = customJwtBuilder;
         this.userService = userService;
         this.jwtProperties = jwtProperties;
     }
@@ -40,7 +44,7 @@ public class JwtService {
         Claims claims = extractAllClaims(jwt);
 
         LocalDateTime expireAt = LocalDateTime.ofInstant(claims.getExpiration().toInstant(), UTC.normalized());
-        if (expireAt.isAfter(utcNow())) {
+        if (expireAt.isBefore(utcNow())) {
             logger.error("Token [{}] expired", jwt);
             throw new JwtExpiredException();
         }
@@ -56,19 +60,20 @@ public class JwtService {
         claims.put(AUTHORITIES, user.getAuthorities());
 
         LocalDateTime expireAt = utcNow().plusMinutes(jwtProperties.getExpirationMinutes());
-        return Jwts.builder()
+        return customJwtBuilder
                 .setClaims(claims)
-                .setSubject(user.getUsername())
+                .setSubject(username)
                 .setIssuedAt(Date.from(utcNow().toInstant(UTC)))
                 .setExpiration(Date.from(expireAt.toInstant(UTC)))
-                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey()).compact();
+                .signWith(SignatureAlgorithm.HS512, jwtProperties.getSecretKey()).compact();
     }
 
 
     private Claims extractAllClaims(String token) {
+        token = token.replace(BEARER_PREFIX, "");
         return Jwts.parser()
                 .setSigningKey(jwtProperties.getSecretKey())
-                .parseClaimsJwt(token)
+                .parseClaimsJws(token)
                 .getBody();
     }
 
