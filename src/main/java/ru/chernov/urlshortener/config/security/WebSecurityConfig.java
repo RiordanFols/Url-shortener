@@ -55,23 +55,23 @@ public class WebSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                    .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.GET, PATH_DOCS, PATH_DOCS_EXTRA, PATH_SWAGGER_UI).permitAll()
-                .requestMatchers(HttpMethod.POST, PATH_API_USERS).permitAll()
-                .requestMatchers(HttpMethod.GET, PATH_SHORT_LINK).permitAll()
-                .requestMatchers(HttpMethod.POST, PATH_AUTH).permitAll()
+                    .requestMatchers(HttpMethod.GET, PATH_DOCS, PATH_DOCS_EXTRA, PATH_SWAGGER_UI).permitAll()
+                    .requestMatchers(HttpMethod.POST, PATH_API_USERS).permitAll()
+                    .requestMatchers(HttpMethod.GET, PATH_SHORT_LINK).permitAll()
+                    .requestMatchers(HttpMethod.POST, PATH_AUTH).permitAll()
                 .anyRequest()
-                .authenticated()
+                    .authenticated()
                 .and()
-                .exceptionHandling()
-                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                    .exceptionHandling()
+                    .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
                 .and()
-                .csrf().disable()
-                .cors().disable();
+                    .csrf().disable()
+                    .cors().disable();
 
         return httpSecurity.build();
     }
