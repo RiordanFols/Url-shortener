@@ -14,6 +14,7 @@ import ru.chernov.urlshortener.enums.user.UserStatus;
 import ru.chernov.urlshortener.exception.link.LinkNotFoundException;
 import ru.chernov.urlshortener.exception.user.UserNotFoundException;
 import ru.chernov.urlshortener.exception.user.UserStatusException;
+import ru.chernov.urlshortener.exception.user.UserWrongPasswordException;
 import ru.chernov.urlshortener.repository.user.UserRepository;
 
 import java.util.Set;
@@ -51,6 +52,18 @@ public class UserService implements UserDetailsService {
             logger.error("User username=[{}] not found.", username);
             return new LinkNotFoundException();
         });
+    }
+
+
+    public User find(String username, String password) {
+        User user = loadUserByUsername(username);
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            logger.error("Password [{}] not matches for user [{}].", password, user.getId());
+            throw new UserWrongPasswordException();
+        }
+
+        return user;
     }
 
 

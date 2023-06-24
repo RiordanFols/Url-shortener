@@ -1,9 +1,11 @@
 package ru.chernov.urlshortener.consts.rest;
 
 public class Routes {
-    public static final String PATH_SHORT_LINK = "/{SHORT_LINK}";
+    // AUTH
+    public static final String PATH_AUTH = "/api/auth";
 
     // LINKS
+    public static final String PATH_SHORT_LINK = "/{SHORT_LINK}";
     public static final String PATH_API_LINKS = "/api/links";
 
     // USERS
