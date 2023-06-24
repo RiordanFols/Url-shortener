@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-import ru.chernov.urlshortener.converter.SettingTypeConverter;
+import ru.chernov.urlshortener.converter.setting.SettingTypeConverter;
 import ru.chernov.urlshortener.enums.setting.SettingType;
 
 

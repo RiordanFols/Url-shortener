@@ -1,4 +1,4 @@
-package ru.chernov.urlshortener.converter;
+package ru.chernov.urlshortener.converter.setting;
 
 import jakarta.persistence.Converter;
 import ru.chernov.urlshortener.converter.attribute.AttributeEnumConverter;

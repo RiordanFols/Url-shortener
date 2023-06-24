@@ -27,7 +27,8 @@ public class WebSecurityConfig {
                                 .requestMatchers(HttpMethod.GET, PATH_SHORT_LINK).anonymous()
                                 .requestMatchers(HttpMethod.POST, PATH_AUTH).anonymous()
                                 .anyRequest().authenticated())
-                .csrf().disable();
+                .csrf().disable()
+                .cors().disable();
 
         return httpSecurity.build();
     }

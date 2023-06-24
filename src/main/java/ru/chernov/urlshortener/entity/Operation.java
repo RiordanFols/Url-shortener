@@ -12,7 +12,7 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import ru.chernov.urlshortener.converter.OperationTypeConverter;
+import ru.chernov.urlshortener.converter.operation.OperationTypeConverter;
 import ru.chernov.urlshortener.enums.operation.OperationType;
 
 import java.time.LocalDateTime;
