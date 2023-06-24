@@ -46,7 +46,7 @@ public class UserGetTest extends AbstractTest {
     @Test
     void notFound() throws Exception {
         mockMvc.perform(getJson(PATH_API_USERS_ID, 9_999_999_999L)
-                        .with(AUTHENTICATION))
+                        .headers(httpHeaders()))
                 .andExpect(status().isNotFound())
                 .andExpect(res -> assertTrue(res.getResolvedException() instanceof UserNotFoundException));
     }
@@ -54,7 +54,7 @@ public class UserGetTest extends AbstractTest {
 
     private void userFound() throws Exception {
         mockMvc.perform(getJson(PATH_API_USERS_ID, TEST_USER_ID)
-                        .with(AUTHENTICATION))
+                        .headers(httpHeaders()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isNotEmpty())
                 .andExpect(jsonPath("$.id").value(TEST_USER_ID))

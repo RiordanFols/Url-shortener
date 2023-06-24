@@ -12,7 +12,6 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ru.chernov.urlshortener.entity.user.User;
-import ru.chernov.urlshortener.service.user.UserService;
 
 import java.io.IOException;
 
@@ -20,12 +19,10 @@ import java.io.IOException;
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
-    private final UserService userService;
 
 
-    public JwtAuthFilter(JwtService jwtService, UserService userService) {
+    public JwtAuthFilter(JwtService jwtService) {
         this.jwtService = jwtService;
-        this.userService = userService;
     }
 
 
@@ -36,12 +33,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String jwt = request.getHeader(HttpHeaders.AUTHORIZATION);
 
         if (jwt != null) {
-            String username = jwtService.getUsername(jwt);
-            User user = userService.loadUserByUsername(username);
+            User user = jwtService.getUser(jwt);
 
-            var authToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
-            authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(authToken);
+            var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+            authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
         filterChain.doFilter(request, response);

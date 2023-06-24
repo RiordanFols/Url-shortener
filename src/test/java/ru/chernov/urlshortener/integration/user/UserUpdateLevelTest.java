@@ -22,7 +22,7 @@ public class UserUpdateLevelTest extends AbstractTest {
     @Test
     void success() throws Exception {
         mockMvc.perform(putJson(PATH_API_USERS_ID_LEVEL, TEST_USER_ID)
-                        .with(AUTHENTICATION)
+                        .headers(httpHeaders())
                         .content(content(REQUEST)))
                 .andExpect(status().isOk());
     }
@@ -31,7 +31,7 @@ public class UserUpdateLevelTest extends AbstractTest {
     @Test
     void notFound() throws Exception {
         mockMvc.perform(putJson(PATH_API_USERS_ID_LEVEL, 9_999_999_999L)
-                        .with(AUTHENTICATION)
+                        .headers(httpHeaders())
                         .content(content(REQUEST)))
                 .andExpect(status().isNotFound())
                 .andExpect(res -> assertTrue(res.getResolvedException() instanceof UserNotFoundException));
@@ -61,7 +61,7 @@ public class UserUpdateLevelTest extends AbstractTest {
 
     private void userStatusException() throws Exception {
         mockMvc.perform(putJson(PATH_API_USERS_ID_LEVEL, TEST_USER_ID)
-                        .with(AUTHENTICATION)
+                        .headers(httpHeaders())
                         .content(content(REQUEST)))
                 .andExpect(status().isConflict())
                 .andExpect(res -> assertTrue(res.getResolvedException() instanceof UserStatusException));

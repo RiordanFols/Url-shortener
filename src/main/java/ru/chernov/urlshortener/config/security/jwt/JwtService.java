@@ -3,9 +3,12 @@ package ru.chernov.urlshortener.config.security.jwt;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import ru.chernov.urlshortener.config.properties.JwtProperties;
 import ru.chernov.urlshortener.entity.user.User;
+import ru.chernov.urlshortener.exception.jwt.JwtExpiredException;
 import ru.chernov.urlshortener.service.user.UserService;
 
 import java.time.LocalDateTime;
@@ -19,6 +22,7 @@ import static ru.chernov.urlshortener.utils.TimeUtil.utcNow;
 
 @Service
 public class JwtService {
+    private static final Logger logger = LogManager.getLogger(JwtService.class);
     private static final String AUTHORITIES = "authorities";
 
     private final UserService userService;
@@ -32,8 +36,16 @@ public class JwtService {
     }
 
 
-    public String getUsername(String jwt) {
-        return extractAllClaims(jwt).getSubject();
+    public User getUser(String jwt) {
+        Claims claims = extractAllClaims(jwt);
+
+        LocalDateTime expireAt = LocalDateTime.ofInstant(claims.getExpiration().toInstant(), UTC.normalized());
+        if (expireAt.isAfter(utcNow())) {
+            logger.error("Token [{}] expired", jwt);
+            throw new JwtExpiredException();
+        }
+
+        return userService.loadUserByUsername(claims.getSubject());
     }
 
 

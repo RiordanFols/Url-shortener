@@ -11,7 +11,6 @@ import ru.chernov.urlshortener.dto.user.UserRegisterRequest;
 import ru.chernov.urlshortener.entity.user.User;
 import ru.chernov.urlshortener.enums.user.UserLevelName;
 import ru.chernov.urlshortener.enums.user.UserStatus;
-import ru.chernov.urlshortener.exception.link.LinkNotFoundException;
 import ru.chernov.urlshortener.exception.user.UserNotFoundException;
 import ru.chernov.urlshortener.exception.user.UserStatusException;
 import ru.chernov.urlshortener.exception.user.UserWrongPasswordException;
@@ -50,7 +49,7 @@ public class UserService implements UserDetailsService {
     public User loadUserByUsername(String username) {
         return userRepository.findByUsername(username).orElseThrow(() -> {
             logger.error("User username=[{}] not found.", username);
-            return new LinkNotFoundException();
+            return new UserNotFoundException();
         });
     }
 

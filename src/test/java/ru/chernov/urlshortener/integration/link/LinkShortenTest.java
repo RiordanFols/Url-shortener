@@ -30,7 +30,7 @@ public class LinkShortenTest extends AbstractTest {
     @Test
     void success() throws Exception {
         String shortLink = mockMvc.perform(postJson(PATH_API_LINKS)
-                        .with(AUTHENTICATION)
+                        .headers(httpHeaders())
                         .content(content(REQUEST)))
                 .andExpect(status().isOk())
                 .andReturn()
@@ -46,7 +46,7 @@ public class LinkShortenTest extends AbstractTest {
     void tooLongLink() throws Exception {
         LinkShortenRequest request = new LinkShortenRequest(nextAlphanumeric(1002), TEST_UUID);
         mockMvc.perform(postJson(PATH_API_LINKS)
-                        .with(AUTHENTICATION)
+                        .headers(httpHeaders())
                         .content(content(request)))
                 .andExpect(status().isBadRequest())
                 .andExpect(res -> assertTrue(res.getResolvedException() instanceof MethodArgumentNotValidException));
@@ -56,7 +56,7 @@ public class LinkShortenTest extends AbstractTest {
     @Test
     void notFoundToken() throws Exception {
         mockMvc.perform(postJson(PATH_API_LINKS)
-                        .with(AUTHENTICATION)
+                        .headers(httpHeaders())
                         .content(content(REQUEST)))
                 .andExpect(status().isNotFound())
                 .andExpect(res -> assertTrue(res.getResolvedException() instanceof TokenNotFoundException));
@@ -88,7 +88,7 @@ public class LinkShortenTest extends AbstractTest {
     @Test
     void frozenUser() throws Exception {
         mockMvc.perform(postJson(PATH_API_LINKS)
-                        .with(AUTHENTICATION)
+                        .headers(httpHeaders())
                         .content(content(REQUEST)))
                 .andExpect(status().isOk());
     }
@@ -112,7 +112,7 @@ public class LinkShortenTest extends AbstractTest {
     @Test
     void tooManyMinuteOperations() throws Exception {
         mockMvc.perform(postJson(PATH_API_LINKS)
-                        .with(AUTHENTICATION)
+                        .headers(httpHeaders())
                         .content(content(REQUEST)))
                 .andExpect(status().isConflict())
                 .andExpect(res -> assertTrue(res.getResolvedException() instanceof TooManyMinuteOperationsException));
@@ -123,7 +123,7 @@ public class LinkShortenTest extends AbstractTest {
     @Test
     void tooManyMonthOperations() throws Exception {
         mockMvc.perform(postJson(PATH_API_LINKS)
-                        .with(AUTHENTICATION)
+                        .headers(httpHeaders())
                         .content(content(REQUEST)))
                 .andExpect(status().isConflict())
                 .andExpect(res -> assertTrue(res.getResolvedException() instanceof TooManyMonthOperationsException));
@@ -132,7 +132,7 @@ public class LinkShortenTest extends AbstractTest {
 
     private void tokenStatusException() throws Exception {
         mockMvc.perform(postJson(PATH_API_LINKS)
-                        .with(AUTHENTICATION)
+                        .headers(httpHeaders())
                         .content(content(REQUEST)))
                 .andExpect(status().isConflict())
                 .andExpect(res -> assertTrue(res.getResolvedException() instanceof TokenStatusException));
@@ -141,7 +141,7 @@ public class LinkShortenTest extends AbstractTest {
 
     private void userStatusException() throws Exception {
         mockMvc.perform(postJson(PATH_API_LINKS)
-                        .with(AUTHENTICATION)
+                        .headers(httpHeaders())
                         .content(content(REQUEST)))
                 .andExpect(status().isConflict())
                 .andExpect(res -> assertTrue(res.getResolvedException() instanceof UserStatusException));

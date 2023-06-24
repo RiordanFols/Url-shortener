@@ -27,4 +27,5 @@ VALUES ('NONE', 6, 1000, 0.00),
        ('GOLDEN', 6000, 100000000, 1000.00);
 
 INSERT INTO usr(id, username, password, registered_at, status, user_level)
-VALUES (9000000000, 'TEST_USER', 'PASSWORD', now() at time zone 'utc', 'ACTIVE', 'NONE');
+VALUES (9000000000, 'TEST_USER', '$2a$08$IRcWo0LmOXvolKAVn0x9FeUEcXkRvsMoBxzAdOfiF2wR6iQBLvHi.',
+        now() at time zone 'utc', 'ACTIVE', 'NONE');
