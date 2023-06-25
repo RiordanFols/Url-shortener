@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +26,6 @@ import static ru.chernov.urlshortener.consts.rest.Routes.PATH_API_USERS_ID;
 import static ru.chernov.urlshortener.consts.rest.Routes.PATH_API_USERS_ID_LEVEL;
 
 
-@PreAuthorize("hasRole('ROLE_BASIC')")
 @RestController
 public class UserController {
     private final UserService userService;

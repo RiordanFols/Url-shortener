@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import ru.chernov.urlshortener.config.properties.JwtProperties;
 import ru.chernov.urlshortener.entity.user.User;
+import ru.chernov.urlshortener.enums.user.UserStatus;
 import ru.chernov.urlshortener.exception.jwt.JwtExpiredException;
 import ru.chernov.urlshortener.service.user.UserService;
 
@@ -53,8 +54,18 @@ public class JwtService {
     }
 
 
+    public Claims extractAllClaims(String token) {
+        token = token.replace(BEARER_PREFIX, "");
+        return Jwts.parser()
+                .setSigningKey(jwtProperties.getSecretKey())
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+
     public String create(String username, String password) {
         User user = userService.find(username, password);
+        userService.validate(user, UserStatus.USER_WORKS_STATUSES);
 
         Map<String, Object> claims = new HashMap<>();
         claims.put(AUTHORITIES, user.getAuthorities());
@@ -66,15 +77,6 @@ public class JwtService {
                 .setIssuedAt(Date.from(utcNow().toInstant(UTC)))
                 .setExpiration(Date.from(expireAt.toInstant(UTC)))
                 .signWith(SignatureAlgorithm.HS512, jwtProperties.getSecretKey()).compact();
-    }
-
-
-    private Claims extractAllClaims(String token) {
-        token = token.replace(BEARER_PREFIX, "");
-        return Jwts.parser()
-                .setSigningKey(jwtProperties.getSecretKey())
-                .parseClaimsJws(token)
-                .getBody();
     }
 
 }
