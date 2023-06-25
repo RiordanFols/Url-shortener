@@ -62,7 +62,6 @@
             <version>2.14.2</version>
         </dependency>
 
-
         <!-- SPRING JPA -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

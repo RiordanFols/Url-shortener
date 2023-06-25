@@ -1,9 +1,45 @@
 # Url-shortener
-Url shortener has
-1) url shorting (surprise)
-2) authorization
-3) user settings 
-4) user levels 
-5) operation limits 
-6) swagger ui documentation 
-7) integration tests
+
+### Functional:
+
+- url shorting
+- authorization (jwt, no roles/authorities)
+- user settings
+- user levels
+- operation limits
+
+### Technologies
+
+#### Main
+
+- Java 17
+- Spring Boot 3
+- Maven
+
+#### DB
+
+- Postgres
+- Hibernate 6
+- Redis (Redisson)
+- Flyway
+
+#### Authorization
+
+- Spring security
+- Jwt
+
+#### Docs
+
+- Spring Open API
+- Swagger UI
+
+#### Tests
+
+- Spring Tests
+- JUnit
+- Mockito
+
+#### Annotation processing
+
+- Lombok
+- Mapstruct
