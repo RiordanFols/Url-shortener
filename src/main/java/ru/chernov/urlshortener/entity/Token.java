@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
-import ru.chernov.urlshortener.converter.TokenStatusConverter;
+import ru.chernov.urlshortener.converter.token.TokenStatusConverter;
 import ru.chernov.urlshortener.entity.user.User;
 import ru.chernov.urlshortener.enums.token.TokenStatus;
 

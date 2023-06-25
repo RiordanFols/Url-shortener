@@ -19,7 +19,7 @@ public class TokenCreateTest extends AbstractTest {
     void success() throws Exception {
         String tokenName = "My token";
         mockMvc.perform(postJson(PATH_API_TOKENS)
-                        .with(AUTHENTICATION)
+                        .headers(httpHeaders())
                         .content(content(new TokenCreateRequest(tokenName))))
                 .andExpect(status().isOk());
 

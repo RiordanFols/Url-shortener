@@ -4,13 +4,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import ru.chernov.urlshortener.config.properties.JwtProperties;
 import ru.chernov.urlshortener.config.properties.LinkProperties;
 import ru.chernov.urlshortener.config.properties.RedisProperties;
 
 
 @EnableConfigurationProperties({
         LinkProperties.class,
-        RedisProperties.class
+        RedisProperties.class,
+        JwtProperties.class
 })
 @EnableJpaRepositories
 @SpringBootApplication

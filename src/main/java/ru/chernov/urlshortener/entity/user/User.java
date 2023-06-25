@@ -8,7 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
@@ -17,10 +16,12 @@ import org.hibernate.validator.constraints.Length;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import ru.chernov.urlshortener.converter.user.UserStatusConverter;
+import ru.chernov.urlshortener.enums.user.UserRole;
 import ru.chernov.urlshortener.enums.user.UserStatus;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Set;
 
 
@@ -54,13 +55,10 @@ public class User implements UserDetails {
     @NotNull
     private UserLevel level;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private Set<UserRole> userRoles;
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return userRoles;
+        return Set.of(UserRole.BASIC);
     }
 
 
@@ -97,6 +95,25 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User user)) return false;
+        return id.equals(user.id)
+                && username.equals(user.username)
+                && password.equals(user.password)
+                && status == user.status
+                && registeredAt.equals(user.registeredAt)
+                && level.equals(user.level);
+    }
+
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, username, password, status, registeredAt, level);
     }
 
 }

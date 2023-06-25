@@ -1,60 +1,61 @@
 package ru.chernov.urlshortener.config.security;
 
-import jakarta.annotation.PostConstruct;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-import ru.chernov.urlshortener.service.user.UserService;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import ru.chernov.urlshortener.config.security.jwt.JwtAuthFilter;
 
-import static ru.chernov.urlshortener.consts.rest.Routes.PATH_API_LINKS;
 import static ru.chernov.urlshortener.consts.rest.Routes.PATH_API_USERS;
+import static ru.chernov.urlshortener.consts.rest.Routes.PATH_AUTH;
 import static ru.chernov.urlshortener.consts.rest.Routes.PATH_SHORT_LINK;
 
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalAuthentication
 public class WebSecurityConfig {
-    private final UserService userService;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final PasswordEncoder passwordEncoder;
+    private static final String PATH_DOCS = "/v3/api-docs";
+    private static final String PATH_DOCS_EXTRA = "/v3/api-docs/**";
+    private static final String PATH_SWAGGER_UI = "/swagger-ui/**";
+
+    private final JwtAuthFilter jwtAuthFilter;
 
 
-    public WebSecurityConfig(UserService userService,
-                             AuthenticationManagerBuilder authenticationManagerBuilder,
-                             PasswordEncoder passwordEncoder) {
-        this.userService = userService;
-        this.authenticationManagerBuilder = authenticationManagerBuilder;
-        this.passwordEncoder = passwordEncoder;
+    public WebSecurityConfig(JwtAuthFilter jwtAuthFilter) {
+        this.jwtAuthFilter = jwtAuthFilter;
     }
 
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .authorizeHttpRequests(requests ->
-                        requests
-                                .requestMatchers("/", "/*").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/v3/api-docs", "/v3/api-docs/**", "/swagger-ui/**").anonymous()
-                                .requestMatchers(HttpMethod.POST, PATH_API_USERS).anonymous()
-                                .requestMatchers(HttpMethod.GET, PATH_SHORT_LINK).anonymous()
-                                .requestMatchers(HttpMethod.POST, PATH_API_LINKS).anonymous()
-                                .anyRequest().authenticated())
-                .csrf().disable();
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .authorizeHttpRequests()
+                .requestMatchers(HttpMethod.GET, PATH_DOCS, PATH_DOCS_EXTRA, PATH_SWAGGER_UI).permitAll()
+                .requestMatchers(HttpMethod.POST, PATH_API_USERS).permitAll()
+                .requestMatchers(HttpMethod.GET, PATH_SHORT_LINK).permitAll()
+                .requestMatchers(HttpMethod.POST, PATH_AUTH).permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED))
+                .and()
+                .csrf().disable()
+                .cors().disable();
 
         return httpSecurity.build();
-    }
-
-
-    @PostConstruct
-    public void authenticationManagerBuilder() throws Exception {
-        authenticationManagerBuilder
-                .userDetailsService(userService)
-                .passwordEncoder(passwordEncoder);
     }
 
 }

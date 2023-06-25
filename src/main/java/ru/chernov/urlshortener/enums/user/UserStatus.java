@@ -11,19 +11,19 @@ import java.util.Set;
 @AllArgsConstructor
 public enum UserStatus implements AttributeEnum<String> {
     /**
-     * Активный пользователь
+     * Active user
      */
     ACTIVE("ACTIVE"),
     /**
-     * Пользователь сам удалил себя из системы
+     * User deleted itself
      */
     DELETED("DELETED"),
     /**
-     * Пользователь временно заблокирован для каких-то разбирательств
+     * User was frozen for investigation
      */
     FROZEN("FROZEN"),
     /**
-     * Пользователь был перманентно заблокирован
+     * User was permanently blocked
      */
     BLOCKED("BLOCKED");
 

@@ -13,7 +13,6 @@ import ru.chernov.urlshortener.repository.OperationRepository;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static java.time.ZoneOffset.UTC;
 import static ru.chernov.urlshortener.utils.TimeUtil.utcNow;
 
 
@@ -48,7 +47,7 @@ public class OperationService {
 
 
     private void validateMinuteMax(UUID tokenValue) {
-        LocalDateTime createdAtFrom = LocalDateTime.now(UTC).minusMinutes(1);
+        LocalDateTime createdAtFrom = utcNow().minusMinutes(1);
         Long lastMinuteOperationsCount = operationRepository.countByToken(tokenValue.toString(), createdAtFrom);
 
         Token token = tokenService.find(tokenValue);
@@ -60,7 +59,7 @@ public class OperationService {
 
 
     private void validateMonthMax(UUID tokenValue) {
-        LocalDateTime createdAtFrom = LocalDateTime.now(UTC).minusMonths(1);
+        LocalDateTime createdAtFrom = utcNow().minusMonths(1);
         Long lastMonthOperationsCount = operationRepository.countByToken(tokenValue.toString(), createdAtFrom);
 
         Token token = tokenService.find(tokenValue);

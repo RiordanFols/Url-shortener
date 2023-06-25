@@ -9,19 +9,19 @@ import ru.chernov.urlshortener.enums.attribute.AttributeEnum;
 @AllArgsConstructor
 public enum TokenStatus implements AttributeEnum<String> {
     /**
-     * Активный токен
+     * Active token
      */
     ACTIVE("ACTIVE"),
     /**
-     * Пользователь сам удалил токен
+     * User deleted token
      */
     DELETED("DELETED"),
     /**
-     * Токен был временно заморожен для разбирательств
+     * Token was frozen for investigation
      */
     FROZEN("FROZEN"),
     /**
-     * Токен был перманентно заблокирован
+     * Token was permanently blocked
      */
     BLOCKED("BLOCKED");
 
